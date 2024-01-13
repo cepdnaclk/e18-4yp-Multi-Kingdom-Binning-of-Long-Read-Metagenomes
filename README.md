@@ -1,7 +1,5 @@
 ___
-# DELETE THIS INSTRUCTIONS AND ADD A SHORT INTRODUCTION ABOUT YOUR PROJECT
+# Multi-Kingdom Binning of Long Read Metagenomes
 ___
 
-## Please refer the instructions in below URL:
 
-https://projects.ce.pdn.ac.lk/docs/how-to-add-a-project

@@ -63,21 +63,20 @@ MetaBCC-LR, a reference-free binning tool, utilizes composition and coverage as 
 Only a sample of reads is utilized for this process, contributing to computational efficiency. At the final stage, it creates statistical models for each cluster and bin the remaining reads. Despite its high accuracy, it may suffer from potential misclassification issues, particularly for low-abundance species, as well as the need for subsampling large datasets.
 </p>
 
-<img src="./images/metabcc.png" alt="Workflow MetaBCC-LR" width="50%" title="Workflow MetaBCC-LR">
-
+<img src="./images/metabcc.png" alt="Workflow MetaBCC-LR" width="50%" title="Workflow MetaBCC-LR"><br>
 <p style="text-align: justify">
 <b>LRBinner<br></b>
 LRBinner adopts an innovative approach to reference-free binning by concurrently computing composition and coverage information for the entire dataset. It merges these features through a variational autoencoder, eliminating the need for subsampling and improving overall binning accuracy. It uses tetranucleotide frequency vectors for composition and k-mer coverage vectors as coverage information of reads. However, the tool faces challenges in distinguishing long reads from similar regions shared between different species.
 </p>
 
-<img src="https://media.springernature.com/full/springer-static/image/art%3A10.1186%2Fs13015-022-00221-z/MediaObjects/13015_2022_221_Fig1_HTML.png?as=webp " alt="Workflow LRBinner" width="50%" title="Workflow LRBinner">
+<img src="https://media.springernature.com/full/springer-static/image/art%3A10.1186%2Fs13015-022-00221-z/MediaObjects/13015_2022_221_Fig1_HTML.png?as=webp " alt="Workflow LRBinner" width="50%" title="Workflow LRBinner"><br>
 
 <p style="text-align: justify">
 <b>OBLR<br></b>
 OBLR introduces a novel strategy in reference-free binning, leveraging read overlap graphs to estimate coverages and improve binning outcomes. It then employs the HDBSCAN hierarchical density-based clustering algorithm for read clustering. Additionally, it uses a sample of reads for initial clustering sampled using a probabilistic downsampling strategy. This results in clusters with similar sizes and fewer isolated points. OBLR then utilizes inductive learning with the GraphSAGE neural network architecture to assign bins to remaining reads.
 </p>
 
-<img src="https://media.springernature.com/lw685/springer-static/image/chp%3A10.1007%2F978-3-031-06220-9_15/MediaObjects/526061_1_En_15_Fig1_HTML.png" alt="Workflow OBLR" width="50%" title="Workflow LRBinner">
+<img src="https://media.springernature.com/lw685/springer-static/image/chp%3A10.1007%2F978-3-031-06220-9_15/MediaObjects/526061_1_En_15_Fig1_HTML.png" alt="Workflow OBLR" width="50%" title="Workflow OBLR"><br>
 
 ## Proposed Work
 We have identified the following as the challenges in existing tools.

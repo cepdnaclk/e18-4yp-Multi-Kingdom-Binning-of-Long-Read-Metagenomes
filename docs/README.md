@@ -47,8 +47,10 @@ This is a sample image, to show how to add images to your page. To learn more op
 ## Abstract
 
 ## Background 
-![DNA structure](https://www.google.com/url?sa=i&url=https%3A%2F%2Fsocratic.org%2Fquestions%2Fhow-are-dna-chromosomes-genes-and-alleles-related&psig=AOvVaw0BBZokBYoq5GtoLDY_6kZe&ust=1707712199910000&source=images&cd=vfe&opi=89978449&ved=0CBMQjRxqFwoTCPCFkvO5ooQDFQAAAAAdAAAAABAD)
+![](https://useruploads.socratic.org/puDVmAVgSBy1dqrzo38g_cellsToDNA.gif)
 
+Microorganisms live in diverse environments across the Earth, playing crucial roles in human health, agriculture, food production, climate changes, and various other processes . Every living organism is constructed from tiny units called cells which serve two crucial purposes: structure and function. Within the nucleus of each cell lies the genome, a complete blueprint containing the instructions for building and maintaining the entire organism, including its unique characteristics and behaviors. This blueprint is housed within thin,
+thread-like structures known as chromosomes, which are composed of DNA and proteins. DNA, the molecule carrying the genetic instructions, takes the form of a double helix, two long strands twisted together. It is made up of repeating units called nucleotides, each labeled with a specific letter: A(Adenine), C(Cytosine), G(Guanine), or T(Thymine). Genes, the fundamental units of heredity, are segments of DNA that contain the instructions for building proteins or functional RNA molecules. They act as messengers, passing on traits from one generation to the next, ensuring the continuity of life
 ## Related works
 
 ## Methodology

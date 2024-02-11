@@ -35,22 +35,20 @@ title:
 8. [Publications](#publications)
 9. [Links](#links)
 
----
-
-<!-- 
-DELETE THIS SAMPLE before publishing to GitHub Pages !!!
-This is a sample image, to show how to add images to your page. To learn more options, please refer [this](https://projects.ce.pdn.ac.lk/docs/faq/how-to-add-an-image/)
-![Sample Image](./images/sample.png) 
--->
-
 
 ## Abstract
 
 ## Background 
-![](https://useruploads.socratic.org/puDVmAVgSBy1dqrzo38g_cellsToDNA.gif)
 
+<p align="center">
+  <img src="https://useruploads.socratic.org/puDVmAVgSBy1dqrzo38g_cellsToDNA.gif" alt="Alt text" width="500" height="320">
+</p>
+
+<p style="text-align: justify">
 Microorganisms live in diverse environments across the Earth, playing crucial roles in human health, agriculture, food production, climate changes, and various other processes . Every living organism is constructed from tiny units called cells which serve two crucial purposes: structure and function. Within the nucleus of each cell lies the genome, a complete blueprint containing the instructions for building and maintaining the entire organism, including its unique characteristics and behaviors. This blueprint is housed within thin,
-thread-like structures known as chromosomes, which are composed of DNA and proteins. DNA, the molecule carrying the genetic instructions, takes the form of a double helix, two long strands twisted together. It is made up of repeating units called nucleotides, each labeled with a specific letter: A(Adenine), C(Cytosine), G(Guanine), or T(Thymine). Genes, the fundamental units of heredity, are segments of DNA that contain the instructions for building proteins or functional RNA molecules. They act as messengers, passing on traits from one generation to the next, ensuring the continuity of life
+thread-like structures known as chromosomes, which are composed of DNA and proteins. DNA, the molecule carrying the genetic instructions, takes the form of a double helix, two long strands twisted together. It is made up of repeating units called nucleotides, each labeled with a specific letter: A(Adenine), C(Cytosine), G(Guanine), or T(Thymine). Genes, the fundamental units of heredity, are segments of DNA that contain the instructions for building proteins or functional RNA molecules. They act as messengers, passing on traits from one generation to the next, ensuring the continuity of life.
+</p>
+
 ## Related works
 
 ## Methodology

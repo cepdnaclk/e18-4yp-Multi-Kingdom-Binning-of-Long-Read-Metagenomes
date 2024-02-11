@@ -26,13 +26,14 @@ title:
 #### Table of content
 
 1. [Abstract](#abstract)
-2. [Related works](#related-works)
-3. [Methodology](#methodology)
-4. [Experiment Setup and Implementation](#experiment-setup-and-implementation)
-5. [Results and Analysis](#results-and-analysis)
-6. [Conclusion](#conclusion)
-7. [Publications](#publications)
-8. [Links](#links)
+2. [Background](#background)
+3. [Related works](#related-works)
+4. [Methodology](#methodology)
+5. [Experiment Setup and Implementation](#experiment-setup-and-implementation)
+6. [Results and Analysis](#results-and-analysis)
+7. [Conclusion](#conclusion)
+8. [Publications](#publications)
+9. [Links](#links)
 
 ---
 
@@ -44,6 +45,9 @@ This is a sample image, to show how to add images to your page. To learn more op
 
 
 ## Abstract
+
+## Background 
+![DNA structure](https://www.google.com/url?sa=i&url=https%3A%2F%2Fsocratic.org%2Fquestions%2Fhow-are-dna-chromosomes-genes-and-alleles-related&psig=AOvVaw0BBZokBYoq5GtoLDY_6kZe&ust=1707712199910000&source=images&cd=vfe&opi=89978449&ved=0CBMQjRxqFwoTCPCFkvO5ooQDFQAAAAAdAAAAABAD)
 
 ## Related works
 

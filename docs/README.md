@@ -49,6 +49,46 @@ Microorganisms thrive in a multitude of environments worldwide, fulfilling criti
 </p>
 
 ## Related works
+<p style="text-align: justify">
+<b>Early long-reads Binning Tools<br></b>
+Megan-LR stands out as one of the earliest tools, employing a reference database. Megan-LR utilizes a protein-alignment-based approach and introduces two algorithms; one for taxonomic binning (based on Lowest Common Ancestor) and another for functional binning (based on an Interval-tree algorithm).
+</p>
+<p style="text-align: justify">
+Two other noteworthy reference-independent tools, MetaProb and BusyBee Web, significantly contributed to the domain of unsupervised metagenomic binning. BusyBee Web, in particular, includes a web-based interface, offering additional visual insights into the binning process. However, despite their respective strengths, both MetaProb and BusyBee Web faced challenges related to scalability as input dataset sizes increased, impeding their ability to bin entire datasets in a single iteration.
+</p>
+
+<p align="justify">
+<b>MetaBCC-LR<br></b>
+MetaBCC-LR, a reference-free binning tool, utilizes composition and coverage as read features, relying on trinucleotide frequency vectors for composition and k-mer coverage histograms for coverage. The tool initially clusters reads based on coverage information, which will be re-clustered using composition information. 
+Only a sample of reads is utilized for this process, contributing to computational efficiency. At the final stage, it creates statistical models for each cluster and bin the remaining reads. Despite its high accuracy, it may suffer from potential misclassification issues, particularly for low-abundance species, as well as the need for subsampling large datasets.
+</p>
+
+<p style="text-align: justify">
+<b>LRBinner<br></b>
+LRBinner adopts an innovative approach to reference-free binning by concurrently computing composition and coverage information for the entire dataset. It merges these features through a variational autoencoder, eliminating the need for subsampling and improving overall binning accuracy. It uses tetranucleotide frequency vectors for composition and k-mer coverage vectors as coverage information of reads. However, the tool faces challenges in distinguishing long reads from similar regions shared between different species.
+</p>
+
+<p style="text-align: justify">
+<b>OBLR<br></b>
+OBLR introduces a novel strategy in reference-free binning, leveraging read overlap graphs to estimate coverages and improve binning outcomes. It then employs the HDBSCAN hierarchical density-based clustering algorithm for read clustering. Additionally, it uses a sample of reads for initial clustering sampled using a probabilistic downsampling strategy. This results in clusters with similar sizes and fewer isolated points. OBLR then utilizes inductive learning with the GraphSAGE neural network architecture to assign bins to remaining reads.
+</p>
+
+<div align="center">
+  <img src="./images/metabcc.png" alt="Workflow MetaBCC-LR" width="30%" title="Workflow MetaBCC-LR">
+  <img src="https://media.springernature.com/full/springer-static/image/art%3A10.1186%2Fs13015-022-00221-z/MediaObjects/13015_2022_221_Fig1_HTML.png?as=webp " alt="Workflow LRBinner" width="30%" title="Workflow LRBinner">
+  <img src="https://media.springernature.com/lw685/springer-static/image/chp%3A10.1007%2F978-3-031-06220-9_15/MediaObjects/526061_1_En_15_Fig1_HTML.png" alt="Workflow OBLR" width="30%" title="Workflow LRBinner">
+</div>
+
+## Proposed Work
+We have identified the following as the challenges in existing tools.
+
+- Mainly focus on composition and coverage as primary features. However, marker genes-based kingdom-level information can enhance the binning process.
+
+- Existing long reads binning tools overlook differential abundance in multiple samples. Considering species abundance across samples could enhance binning accuracy.
+
+- Lack of binning refinements for long reads binning tools. Introducing refining mechanisms could improve the precision of bin assignments.
+
+Therefore, this project aims to develop a method to bin long reads from multiple metagenomic samples while being aware of the underlying microbial kingdoms. Specifically, it will be a Python-based command-line tool addressing the scalability issues with massive datasets.
 
 ## Methodology
 

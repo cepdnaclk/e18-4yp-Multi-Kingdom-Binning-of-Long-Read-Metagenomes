@@ -7,6 +7,7 @@ def read_file(file_path):
 
 # Get folder path from the user
 folder_path = input("Enter the folder path containing the HMM files: ")
+file_name = input("Enter the file name[example.hmm]: ")
 
 # Ensure the folder path is valid
 if not os.path.isdir(folder_path):
@@ -14,7 +15,7 @@ if not os.path.isdir(folder_path):
     exit()
 
 # Output file name
-output_file = "combined_hmm.txt"
+output_file = file_name
 
 # List to store contents of all HMM files
 all_contents = []
@@ -44,7 +45,7 @@ for filename in os.listdir(folder_path):
         print(f"Progress: {completion_percentage:.2f}% completed", end='\r')
 
 # Combine contents
-combined_contents = "\n//\n".join(all_contents)
+combined_contents = "\n".join(all_contents)
 
 # Write combined contents to the output file
 with open(output_file, 'w') as out_file:

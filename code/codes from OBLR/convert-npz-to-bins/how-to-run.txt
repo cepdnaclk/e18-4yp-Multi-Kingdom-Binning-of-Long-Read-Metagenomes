@@ -1,0 +1,3 @@
+Requirements - numpy , sys
+To run 
+    python map_bins.py classes.npz read_ids

@@ -1,6 +1,6 @@
 # Get contigs containing marker genes
 def get_reads_with_marker_genes(
-    mg_overlap_threshold, reads_and_scores_dict, hmmout_file, position
+    reads_and_scores_dict, hmmout_file, position, mg_overlap_threshold
 ):
 
     with open(f"{hmmout_file}", "r") as file:
@@ -38,5 +38,7 @@ def get_reads_with_marker_genes(
 
 def analyze_hmmout_file(previous_result, hmmout_file, position):
 
-    reads_and_scores_dict = get_reads_with_marker_genes(previous_result, hmmout_file, position)
+    mg_overlap_threshold = 0.5
+
+    reads_and_scores_dict = get_reads_with_marker_genes(previous_result, hmmout_file, position, mg_overlap_threshold)
     return reads_and_scores_dict

@@ -70,7 +70,7 @@ def main():
         run_hmmer(path_for_results+".faa", hmm_file_path, path_for_results+".hmmout")
         # run_prodigal_and_hmmer(fasta_file, results_folder+filename+".faa", hmm_file_path, results_folder+filename+".hmmout")
 
-        reads_scores_dict = analyze_hmmout_file(reads_scores_dict, path_for_results+".hmmout", file_count)
+        reads_scores_dict = analyze_hmmout_file(reads_scores_dict, path_for_results+".hmmout", file_count, 0.5)
         file_count += 1
 
     write_dict_to_file(reads_scores_dict, results_folder+result_file_name, kingdoms)

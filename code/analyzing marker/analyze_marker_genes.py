@@ -54,8 +54,8 @@ def get_id_map(gene_file):
                 # Split the line by spaces
                 parts = line.strip().split()
                 target_id = parts[0].lstrip(">")
-                target_id = target_id.split("_")
-                target_id = target_id[0]
+                target_id_parts = target_id.rsplit("_", 1)
+                target_id = target_id_parts[0]
                 # Iterate through each part to find the one containing "ID="
                 for part in parts:
                     if "ID=" in part:

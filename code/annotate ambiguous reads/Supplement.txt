@@ -1,0 +1,40 @@
+This script use for annotating incorrectly binned long reads.
+
+Inputs are,
+        - Ambigous vertices ("ambigous_vertices.txt")
+        - Marker gene assignment ("zymo10_1000kto1100k_genes_bacteria_test.hmm.hmmout_marker_scores.txt")
+        - Current bin assignment for each read ("classes.npz")
+        - Connected vertices for each read ("edges.npy")
+
+Following are the main steps involving,
+        1) Extract the ambigous vertices and iterate through them.
+
+        2) Check whether a marker gene has assigned to a particular vertices.
+
+        3) If not, keep it as an ambiguous vertex by assigning bin as -1
+
+        4) If it has a marker gene assigned, find the connected vertices to that vertex.
+
+        5) Find both marker genes and bins for that connected vertices
+
+        6) Check whether same marker gene has assigned to that connected vertices
+
+        7) If not, keep it as an ambigous vertex by assigning bin as -1
+
+        8) If there is a connected vertex which has the same marker gene, then check whether there are other connected 
+        vertices which have the same marker gene. If there are more such vertices then it should check whether these all vertices
+        have classified under a same bin. If not, then the vertex keep as an ambigous or all have classified to same 
+        bin, then the vertex classify to the same bin.
+
+**Note: For this we use marker gene assignment for each read and both the marker gene assignment and the 
+bin assignment of connected reads of that particular read.
+
+How to run 
+    Create a folder having following files
+        - ambigous_vertices.txt
+        - zymo10_1000kto1100k_genes_bacteria_test.hmm.hmmout_marker_scores.txt
+        - classes.npz
+        - edges.npy
+    
+    command to run
+        python annotate_read.py

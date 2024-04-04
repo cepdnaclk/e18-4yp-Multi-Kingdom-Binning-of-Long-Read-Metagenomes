@@ -1,19 +1,23 @@
 import numpy as np
 import os
+import sys
+
 
 # ----------------------------------------------------
 # these should be taken as inputs
 
-# path to the folder where oblr results are stored
-oblr_results = '../Results/zymo10_1000kto1100k/oblr'
+# Check if the correct number of arguments are provided
+if len(sys.argv) != 4:
+    print("Usage: python script.py oblr_results_folder output_folder marker_file_path")
+    sys.exit(1)
 
-# path to the folder where output should be stored
-output = '../Results/zymo10_1000kto1100k/output'
-
-# marker file
-input_marker_file = '../e18-4yp-Multi-Kingdom-Binning-of-Long-Read-Metagenomes/data/marker_genes/bacteria_archaea.hmm'
+# Take paths from command line arguments
+oblr_results = sys.argv[1]
+output = sys.argv[2]
+input_marker_file = sys.argv[3]
 
 # ----------------------------------------------------
+
 
 # files
 fasta_file = oblr_results + '/reads.fasta'
@@ -120,7 +124,11 @@ if return_code1 == 0:
     if return_code2 == 0:
         # proecss hmmout file and get marker genes of each read
         threshold = 50
-        process_hmmout_file(hmmout_file, threshold)
+        try:
+            output = process_hmmout_file(hmmout_file, threshold)
+            print(output)
+        except Exception as e:
+            print(f"Error: {e}")
     else:
         print ("Error occured in HMMSEARCH command. Please try again")
 

@@ -1,15 +1,21 @@
 import numpy as np
+import sys
+
 
 # ----------------------------------------------------
 # these should be taken as inputs
 
-# path to the folder where oblr results are stored
-oblr_results = '../Results/zymo10_1000kto1100k/oblr'
+# Check if the correct number of arguments are provided
+if len(sys.argv) != 4:
+    print("Usage: python script.py oblr_results_folder output_folder")
+    sys.exit(1)
 
-# path to the folder where output should be stored
-output = '../Results/zymo10_1000kto1100k/output'
+# Take paths from command line arguments
+oblr_results = sys.argv[1]
+output = sys.argv[2]
 
 # ----------------------------------------------------
+
 
 vertices_file = output + "/mis_binned_reads.txt"
 marker_scores = output + "/marker_scores.txt"
@@ -244,4 +250,8 @@ def annotate_bins():
 
 # ----------------------------------------------------------------------------------------------------------------------------
 
-annotate_bins(vertices_file, marker_scores, edges_file, classes_file)
+try:
+    annotate_bins(vertices_file, marker_scores, edges_file, classes_file)
+    print("Updated with new bins successfully!")
+except Exception as e:
+    print(f"Error: {e}")

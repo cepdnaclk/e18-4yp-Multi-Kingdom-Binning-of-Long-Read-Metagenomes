@@ -52,8 +52,12 @@ def get_bin(ref_vertex):
     mask = classified == ref_vertex
     class_value = classes[mask]
 
+    if (len(class_value) > 0):
+       bin = class_value[0]
+    else:
+       bin = -1
     # result is always received as an array
-    return class_value[0]
+    return bin
 
 # when creating the graph, the read_id is converted to an index
 # example: read_1 = 0, read_2 = 1

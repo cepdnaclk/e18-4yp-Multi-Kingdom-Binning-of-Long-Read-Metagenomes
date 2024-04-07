@@ -10,6 +10,9 @@ def annotate_bin(vertices_file, marker_scores, edges_file, classes_file):
     # Extract the ambiguous vertices
     vertices = read_vertex(vertices_file)
 
+    # Update the class.npz by updating bins of ambiguous vertices with -1
+    update_bins_of_ambiguous_vertices(vertices, classes_file)
+
     # No of vertices which are changed its bin
     count = 0
 
@@ -77,6 +80,26 @@ def annotate_bin(vertices_file, marker_scores, edges_file, classes_file):
 
 
 
+# Update bins of ambiguous vertices in to -1
+def update_bins_of_ambiguous_vertices(vertices, classes_file):
+    # Load the classes.npz file
+    data = np.load(classes_file)
+
+    # Extract the arrays from the loaded data
+    classes = data['classes']
+    classified = data['classified']
+
+    for ref_vertex in vertices:
+        # vertex should be an integer to use as an index
+        vertex = int(ref_vertex)
+
+        # Use NumPy advanced indexing to find the class value
+        mask = classified == vertex
+        classes[mask] = -1
+    
+    # Save the updated classified array back to the .npz file
+    np.savez(classes_file, classes=classes, classified=classified)
+
 
 # Update the bin when the vertices is given with its bin
 def update_bin(classes_file, vertices_info):
@@ -119,7 +142,9 @@ def get_marker_genes_for_connected_vertices(marker_scores, connected_vertices):
         marker_gene = find_marker_gene(marker_scores, get_read_id(connected_vertex))
 
         # Store the marker gene for respective vertex
-        connected_vertices_info = {connected_vertex: {'marker_gene': find_marker_gene(marker_scores, get_read_id(connected_vertex))}}
+        # connected_vertices_info = {connected_vertex: {'marker_gene': find_marker_gene(marker_scores, get_read_id(connected_vertex))}}
+        connected_vertices_info[connected_vertex] = {}
+        connected_vertices_info[connected_vertex]['marker_gene'] = marker_gene
 
     # Return the dictionary which has stored the marker gene for each vertex
     return connected_vertices_info

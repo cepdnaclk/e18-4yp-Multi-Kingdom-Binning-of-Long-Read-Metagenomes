@@ -60,7 +60,7 @@ def annotate_bin(vertices_file, marker_scores, edges_file, classes_file):
                         print(f"Bin got assigned, new bin - {vertex_bin}")
 
                     # Same marker gene found , but the bin is different, so keep the vertex as ambiguous
-                    elif(vertex_bin != info['bin']):
+                    elif(vertex_bin != info['bin'] & info['bin'] != -1):
                         vertex_bin = -1
                         ambigous = True
                         print(f"Vertex {vertex} is ambiguous")

@@ -7,20 +7,20 @@ import sys
 
 # Check if the correct number of arguments are provided
 if len(sys.argv) != 4:
-    print("Usage: python script.py oblr_results_folder output_folder")
+    print("Usage: python script.py initial_tool_results_folder output_folder initial_tool")
     sys.exit(1)
 
 # Take paths from command line arguments
-oblr_results = sys.argv[1]
+initial_tool_results = sys.argv[1]
 output = sys.argv[2]
+initial_binning_tool = sys.argv[3]
 
 # ----------------------------------------------------
 
 
-vertices_file = output + "/mis_binned_reads.txt"
+vertices_file = output + "/mis_binned_reads.npy"
 marker_scores = output + "/marker_scores.txt"
-edges_file = oblr_results + "/edges.npy"
-classes_file = oblr_results + "/classes.npz"
+edges_file = initial_tool_results + "/edges.npy"
 updated_classes_file = output + "/new_classes.npz"
 
 
@@ -47,13 +47,13 @@ def get_marker_genes_for_connected_vertices(marker_scores, connected_vertices):
 
 
 # Get bins for each connected vertices
-def get_bins_for_connected_vertices(connected_vertices_info, classes_file):
+def get_bins_for_connected_vertices(connected_vertices_info):
 
     # Iterate through connected vertices
     for connected_vertex in connected_vertices_info:
 
         # Find the bin 
-        bin = get_bin(connected_vertex, classes_file)
+        bin = get_bin(connected_vertex)
 
         # Assign the bin to each vertex
         connected_vertices_info[connected_vertex]['bin'] = bin
@@ -63,22 +63,33 @@ def get_bins_for_connected_vertices(connected_vertices_info, classes_file):
 
 
 # Get the bin
-def get_bin(ref_vertex, class_file):
+def get_bin(ref_vertex):
 
-    # Load the .npz file
-    data = np.load(class_file)
+    if initial_binning_tool == 'lrbinner' or initial_binning_tool == 'metabcc':
+        read_cluster = np.loadtxt(initial_tool_results + 'bins.txt', dtype=int)
+        bin = read_cluster[ref_vertex]
 
-    # Extract the arrays from the loaded data
-    classes = data['classes']
-    classified = data['classified']
+    else:
+        classes_file = initial_tool_results + '/classes.npz'
 
-    # Use NumPy advanced indexing to find the class value
-    mask = classified == ref_vertex
-    class_value = classes[mask]
+        # Load the .npz file
+        data = np.load(classes_file)
+
+        # Extract the arrays from the loaded data
+        classes = data['classes']
+        classified = data['classified']
+
+        # Use NumPy advanced indexing to find the class value
+        mask = classified == ref_vertex
+        class_value = classes[mask]
+
+        if (len(class_value) > 0):
+            bin = class_value[0]
+        else:
+            bin = -1
 
     # result is always received as an array
-    return class_value[0]
-                
+    return bin
 
 # Extract the ambiguous vertices
 def read_vertex(filename):
@@ -137,7 +148,7 @@ def get_connected_vertices(edges_file, vertex):
 
 # Update the bin when the vertices is given with its bin
 def update_bin(new_classes_file, vertices_info):
-
+    classes_file = initial_tool_results + '/classes.npz'
     old_classes_file = classes_file
 
     # Load the classes.npz file
@@ -166,13 +177,14 @@ def update_bin(new_classes_file, vertices_info):
 def annotate_bins():
 
     # Extract the ambiguous vertices
-    ambigous_vertices = read_vertex(vertices_file)
-    # VERTICES ARE IN NUMERICAL FORM (not in the form read_1)
+    # ambigous_vertices = read_vertex(vertices_file)
+    ambigous_vertices = np.load(vertices_file)
 
     # No of vertices which are changed its bin
     actually_updated_count = 0
     replaced_as_unlabelled = 0
     relabel_with_different_bin = 0
+    mis_binned_without_markers = 0
 
     # Store the bin assigned to vertices
     vertices_info = {}
@@ -181,16 +193,16 @@ def annotate_bins():
     for ambigous_vertex in ambigous_vertices:
         vertex = int(ambigous_vertex) # since these are read from txt file, type is str
 
-        old_bin = get_bin(vertex, classes_file)
+        old_bin = get_bin(vertex)
 
         # Find the marker gene for the ambiguous vertex 
         marker_gene = find_marker_gene(marker_scores,vertex)
-
-        # Mark the bin as ambiguous by assigning -1
-        vertex_bin = -1
         
         # If there exist a marker gene for the ambiguous vertex
         if marker_gene:
+
+            # Mark the bin as ambiguous by assigning -1
+            vertex_bin = -1
 
             print(f"Marker gene found = {marker_gene} for ref_vertex {vertex}")
 
@@ -203,7 +215,7 @@ def annotate_bins():
             # Get marker genes
             connected_read_marker_info = get_marker_genes_for_connected_vertices(marker_scores, connected_vertices)
             # Get bins     
-            connected_read_marker_info = get_bins_for_connected_vertices(connected_read_marker_info, classes_file)
+            connected_read_marker_info = get_bins_for_connected_vertices(connected_read_marker_info)
 
             # Iterate through connected vertices
             for connected_vertex, info in connected_read_marker_info.items():
@@ -227,7 +239,13 @@ def annotate_bins():
                         ambigous = True
                         print(f"Vertex {vertex} is ambiguous")
                         break
-            print("------------------------------------------------------------------------------------")
+        
+        # if no marker gene, dont change the bin
+        else:
+            vertex_bin = old_bin
+            mis_binned_without_markers += 1
+
+        print("------------------------------------------------------------------------------------")
 
         # Count the no of vertices assigned by bins
         if vertex_bin != -1 and vertex_bin != old_bin:
@@ -244,6 +262,7 @@ def annotate_bins():
 
     # Update the bin of the vertex
     update_bin(updated_classes_file, vertices_info)
+    print(f"Mis binned reads without any marker gene = {mis_binned_without_markers}")
     print(f"Number of reads replaced with a bin different to its old bin (except minus 1)= {relabel_with_different_bin}") 
     print(f"Reads replaced with (-1) = {replaced_as_unlabelled}") 
     print(f"From {len(ambigous_vertices)} reads, {actually_updated_count} of reads were updated either by -1 or different bin.") 
@@ -251,7 +270,7 @@ def annotate_bins():
 # ----------------------------------------------------------------------------------------------------------------------------
 
 try:
-    annotate_bins(vertices_file, marker_scores, edges_file, classes_file)
+    annotate_bins()
     print("Updated with new bins successfully!")
 except Exception as e:
     print(f"Error: {e}")

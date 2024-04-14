@@ -60,23 +60,32 @@ def get_connected_vertices(ref_vertex, edges_nparray):
     result = edges_nparray[mask, 1]
 
     return result # result comes as a numpy array
-
 # read clssified array in classes.npz to get the bins
-def get_bin(ref_vertex):
 
+classes_file = initial_tool_results + '/classes.npz'
+
+# Load the .npz file
+data = np.load(classes_file)
+classes = data['classes']
+classified = data['classified']
+from functools import lru_cache
+
+@lru_cache(maxsize=None)
+def get_bin(ref_vertex):
+    global classes, classified
     if initial_binning_tool == 'lrbinner' or initial_binning_tool == 'metabcc':
         read_cluster = np.loadtxt(initial_tool_results + 'bins.txt', dtype=int)
         bin = read_cluster[ref_vertex]
 
     else:
-        classes_file = initial_tool_results + '/classes.npz'
+        # classes_file = initial_tool_results + '/classes.npz'
 
-        # Load the .npz file
-        data = np.load(classes_file)
+        # # Load the .npz file
+        # data = np.load(classes_file)
 
         # Extract the arrays from the loaded data
-        classes = data['classes']
-        classified = data['classified']
+        # classes = data['classes']
+        # classified = data['classified']
 
         # Use NumPy advanced indexing to find the class value
         mask = classified == ref_vertex
@@ -98,15 +107,20 @@ def get_read_id(ref_vertex):
 
 # check whether a vertex is ambigous and return the corresponding ambigous vertex too
 def is_ambigous(ref_vertex, edges):
-
+    # print(1)
     ref_vertex_bin = get_bin(ref_vertex)
     connected_vertices = get_connected_vertices(ref_vertex, edges)
+    # print(2)
+
 
     for connected_vertex in connected_vertices:
         connected_vertex_bin = get_bin(connected_vertex)
 
         if (connected_vertex_bin != ref_vertex_bin):
+            # print(3)
+
             return ref_vertex, connected_vertex 
+    # print(4)
 
     return []       
 
@@ -122,10 +136,10 @@ def find_all_ambigous_vertices(edges):
     
     ambigous_vertices = set()
     isolated_vertices = set()
-    for read in all_reads_from_fasta:
+    for read in tqdm(all_reads_from_fasta):
 
         ref_vertex = int(read.id.split('_')[-1]) - 1
-        print("ref: ", ref_vertex)
+        # print("ref: ", ref_vertex)
 
         connected_vertices = get_connected_vertices(ref_vertex, edges)
         if len(connected_vertices) > 0:
@@ -134,7 +148,6 @@ def find_all_ambigous_vertices(edges):
                 results = is_ambigous(ref_vertex, edges)
                 for result in results:
                     ambigous_vertices.add(result)
-                    print(type(result))
 
         else:
            isolated_vertices.add(ref_vertex)

@@ -1,7 +1,7 @@
 import numpy as np
 
-vertices_file = "ambigous_vertices.txt"
-marker_scores = "zymo10_1000kto1100k_genes_bacteria_test.hmm.hmmout_marker_scores.txt"
+vertices_file = "mis_binned_reads.txt"
+marker_scores = "marker_scores.txt"
 edges_file = "edges.npy"
 classes_file = "classes.npz"
 
@@ -10,17 +10,26 @@ def annotate_bin(vertices_file, marker_scores, edges_file, classes_file):
     # Extract the ambiguous vertices
     vertices = read_vertex(vertices_file)
 
-    # Update the class.npz by updating bins of ambiguous vertices with -1
-    update_bins_of_ambiguous_vertices(vertices, classes_file)
-
-    # No of vertices which are changed its bin
+    # No of total vertices which are checked
     count = 0
+
+    # No of vertices which are taken same bin after the annotation
+    same_bin_count = 0
+
+    # No of vertices which are kept as ambiguous
+    ambiguous_count = 0
+
+    # No of vertices which are taken different bin after the annotation
+    change_bin_count = 0
 
     # Store the bin assigned to vertices
     vertices_info = {}
 
     # Iterate through ambiguous vertices
     for vertex in vertices:
+
+        # get the old bin
+        old_bin = get_bin(vertex, classes_file)
         
         # Find the marker gene for the ambiguous vertex 
         marker_gene = find_marker_gene(marker_scores,get_read_id(vertex))
@@ -60,15 +69,55 @@ def annotate_bin(vertices_file, marker_scores, edges_file, classes_file):
                         print(f"Bin got assigned, new bin - {vertex_bin}")
 
                     # Same marker gene found , but the bin is different, so keep the vertex as ambiguous
-                    elif(vertex_bin != info['bin'] & info['bin'] != -1):
+                    elif(vertex_bin != info['bin']):
                         vertex_bin = -1
                         ambigous = True
                         print(f"Vertex {vertex} is ambiguous")
                         break
 
-        # Count the no of vertices assigned by bins
-        if vertex_bin != -1:
-            count = count +1
+        else:
+            # Get connected vertices
+            connected_vertices = get_connected_vertices(vertex)
+
+            # Initialize an empty dictionary to store connected vertices with their bins
+            connected_vertices_bins = {}
+
+            # Get bins of connected vertices
+            for connected_vertex in connected_vertices:
+                current_bin = get_bin(connected_vertex,classes_file)
+                connected_vertices_bins[connected_vertex] = current_bin
+
+            # Count the occurrence of each bin
+            bin_counts = {}
+
+            for bin_value in connected_vertices_bins.values():
+                if bin_value in bin_counts:
+                    bin_counts[bin_value] += 1
+                else:
+                    bin_counts[bin_value] = 1
+
+            # Find the bin with the highest count
+            majority_bin = max(bin_counts, key=bin_counts.get)
+
+            # Assign the bin of majority vertices are belong to
+            vertex_bin = majority_bin
+
+        # Take counts
+        # Vertices which have same bin after relabeling
+        if(old_bin == vertex_bin):
+            same_bin_count = same_bin_count + 1
+
+        # Which became ambiguous -> bin = -1
+        if(vertex_bin == -1):
+            ambiguous_count = ambiguous_count + 1
+
+        # Number of vertices which have new bins after relabeling but not -1
+        if(old_bin != vertex_bin & vertex_bin != -1):
+            change_bin_count = change_bin_count + 1
+
+        # Total vertices checked
+        count = count +1
+
         
         # Store the bin's info for each vertex
         vertices_info[vertex] = {'bin': vertex_bin}
@@ -76,7 +125,10 @@ def annotate_bin(vertices_file, marker_scores, edges_file, classes_file):
     # Update the bin of the vertex
     update_bin(classes_file, vertices_info)
 
-    print(f"Count = {count}")    
+    print(f"Total vertices checked = {count}")
+    print(f"Number of vertices with same bin = {same_bin_count}")
+    print(f"Number of vertices became ambiguous further = {ambiguous_count}")
+    print(f"Number of vertices got another bin except -1 = {change_bin_count}")
 
 
 

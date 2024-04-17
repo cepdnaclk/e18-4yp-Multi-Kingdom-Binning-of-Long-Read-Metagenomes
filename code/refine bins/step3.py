@@ -1,6 +1,6 @@
 import numpy as np
 import sys
-
+from tqdm import tqdm
 
 # ----------------------------------------------------
 # these should be taken as inputs
@@ -62,34 +62,35 @@ def get_bins_for_connected_vertices(connected_vertices_info):
     return connected_vertices_info
 
 
-# Get the bin
+classes_file = initial_tool_results + '/classes.npz'
+
+# Load the .npz file
+data = np.load(classes_file)
+classes = data['classes']
+classified = data['classified']
+from functools import lru_cache
+
+@lru_cache(maxsize=None)
 def get_bin(ref_vertex):
+    global classes, classified
+    # if initial_binning_tool == 'lrbinner' or initial_binning_tool == 'metabcc':
+    #     read_cluster = np.loadtxt(initial_tool_results + 'bins.txt', dtype=int)
+    #     bin = read_cluster[ref_vertex]
 
-    if initial_binning_tool == 'lrbinner' or initial_binning_tool == 'metabcc':
-        read_cluster = np.loadtxt(initial_tool_results + 'bins.txt', dtype=int)
-        bin = read_cluster[ref_vertex]
+    # else:
 
+    # Use NumPy advanced indexing to find the class value
+    mask = classified == ref_vertex
+    class_value = classes[mask]
+
+    if (len(class_value) > 0):
+        bin = class_value[0]
     else:
-        classes_file = initial_tool_results + '/classes.npz'
-
-        # Load the .npz file
-        data = np.load(classes_file)
-
-        # Extract the arrays from the loaded data
-        classes = data['classes']
-        classified = data['classified']
-
-        # Use NumPy advanced indexing to find the class value
-        mask = classified == ref_vertex
-        class_value = classes[mask]
-
-        if (len(class_value) > 0):
-            bin = class_value[0]
-        else:
-            bin = -1
+        bin = -1
 
     # result is always received as an array
     return bin
+    
 
 # Extract the ambiguous vertices
 def read_vertex(filename):
@@ -168,7 +169,7 @@ def update_bin(new_classes_file, vertices_info):
         mask = classified == vertex
         classes[mask] = vertices_info[ref_vertex]['bin']
 
-        print(f"Bin - {classes[mask]}")
+        #print(f"Bin - {classes[mask]}")
 
     # Save the updated classified array back to the .npz file
     np.savez(new_classes_file, classes=classes, classified=classified)
@@ -190,7 +191,7 @@ def annotate_bins():
     vertices_info = {}
 
     # Iterate through ambiguous vertices
-    for ambigous_vertex in ambigous_vertices:
+    for ambigous_vertex in tqdm(ambigous_vertices):
         vertex = int(ambigous_vertex) # since these are read from txt file, type is str
 
         old_bin = get_bin(vertex)
@@ -204,7 +205,7 @@ def annotate_bins():
             # Mark the bin as ambiguous by assigning -1
             vertex_bin = -1
 
-            print(f"Marker gene found = {marker_gene} for ref_vertex {vertex}")
+           # print(f"Marker gene found = {marker_gene} for ref_vertex {vertex}")
 
             # Get connected vertices for the ambigous vertex
             connected_vertices = get_connected_vertices(edges_file, vertex)
@@ -226,18 +227,18 @@ def annotate_bins():
                 # Compare the marker gene of connected vertex with the original marker gene
                 if connected_marker_gene == marker_gene:
                     
-                    print(f"Same marker gene found - {marker_gene}, bin - {info['bin']}")
+                    #print(f"Same marker gene found - {marker_gene}, bin - {info['bin']}")
 
                     # Same marker gene found at first, so assign its bin to the ambiguous vertex
                     if(vertex_bin == -1):
                         vertex_bin = info['bin']
-                        print(f"Bin got assigned, new bin - {vertex_bin}")
+                        #print(f"Bin got assigned, new bin - {vertex_bin}")
 
                     # Same marker gene found , but the bin is different, so keep the vertex as ambiguous
                     elif(vertex_bin != info['bin']):
                         vertex_bin = -1
                         ambigous = True
-                        print(f"Vertex {vertex} is ambiguous")
+                        #print(f"Vertex {vertex} is ambiguous")
                         break
         
         # if no marker gene, dont change the bin
@@ -245,7 +246,7 @@ def annotate_bins():
             vertex_bin = old_bin
             mis_binned_without_markers += 1
 
-        print("------------------------------------------------------------------------------------")
+        #print("------------------------------------------------------------------------------------")
 
         # Count the no of vertices assigned by bins
         if vertex_bin != -1 and vertex_bin != old_bin:

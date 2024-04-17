@@ -53,7 +53,7 @@ def generate_hmmout_file(marker_file, faa_file):
 		+ marker_file
                 + " "
                 + faa_file
-                + ".faa"
+  
                 
             )
 
@@ -78,7 +78,7 @@ def process_hmmout_file(hmmout_filepath, threshold):
                     continue
                 
                 data = line.split()
-                target_read = target_id.rsplit("_", 1)
+                target_read = data[0].rsplit("_", 1)
                 
                 # Extracting target ID, calculating score, and retrieving marker gene
                 target_id = target_read[0]
@@ -114,10 +114,23 @@ def process_hmmout_file(hmmout_filepath, threshold):
 # ----------------------------------------------------------------------------------------------------------------------------
 
 # generate .faa file
-return_code1, faa_file = generate_gene_faa_file(fasta_file)
+# return_code1, faa_file = generate_gene_faa_file(fasta_file)
+
+faa_file = output + "/reads_genes.faa"
+
+# Check if the file exists
+if os.path.exists(faa_file):
+  # Check if the file is not empty
+  if os.path.getsize(faa_file) > 0:
+    return_code1 = 0
+    print("faa file already created")
+  else:
+    print("creating faa file from fasta file")
+    return_code1, faa_file = generate_gene_faa_file(fasta_file)
+        
 
 if return_code1 == 0:
-    faa_file = output + "/reads_genes"
+    # faa_file = output + "/reads_genes"
     # generate hmmout file
     return_code2, hmmout_file = generate_hmmout_file(input_marker_file, faa_file)
 

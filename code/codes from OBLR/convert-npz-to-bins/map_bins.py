@@ -23,4 +23,4 @@ mapped_values = dict(zip(read_ids, class_array))
 # Writing mapped values to bins.txt
 with open('bins.tsv', 'w') as output_file:
     for read_number in read_ids:
-        output_file.write(f"read_{read_number}\t{mapped_values.get(read_number)}\n")
+        output_file.write(f"read_{read_number + 1}\t{mapped_values.get(read_number)}\n")

@@ -2,8 +2,8 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 from torch_geometric.nn import SAGEConv
-from torch_geometric.data import Data, Dataset
-from torch_geometric.data import NeighborSampler
+from torch_geometric.data import Data
+from torch_geometric.loader import NeighborSampler
 import numpy as np
 import argparse
 import os
@@ -109,30 +109,33 @@ def predict_all(model, x, subgraph_loader):
 
 def get_graph_data(features, edges):
     edge_index = torch.tensor(edges, dtype=torch.long)
-    data = Data(x=torch.tensor(features).float(),
-                edge_index=edge_index.t().contiguous())
+    data = Data(x=torch.tensor(features).float(),edge_index=edge_index.t().contiguous())
 
     return data
 
+def get_train_data(read_cluster):
 
-def get_train_data(features, read_cluster):
-    train_idx = read_cluster.T[0]
+    # Extract indices where arr[index] == -1
+    train_idx = np.where(read_cluster != -1)[0]
     train_idx = torch.LongTensor(train_idx)
-
-    y = -1 * torch.ones(len(features), dtype=torch.long)
-    y[train_idx] = torch.LongTensor(read_cluster.T[1])
-    no_classes = len(set(read_cluster.T[1]))
-
+    print(train_idx.shape)
+    
+    y = torch.LongTensor(read_cluster)
+    print(y)
+    
+    no_classes = len(set(read_cluster)) # removed one for the cluster mentioned as -1
+    print(no_classes)
     return train_idx, y, no_classes
 
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description="""OBLR GraphSAGE Routine.""")
 
-    # exp = '../Results/zymo10_1000kto1100k/output/' --> output args
+    # data --> results from oblr
+    # output --> results from refiner tool
 
     parser.add_argument('--data', '-d',
-                        help="Data from build_graph.py data.npz",
+                        help="folder where oblr resulted files are stored",
                         type=str,
                         required=True)
     parser.add_argument(
@@ -144,27 +147,30 @@ if __name__ == '__main__':
     output = args.output
     updated_clusters = np.load(output + 'new_classes.npz')
 
-    if not os.path.isdir(output):
-        os.mkdir(output)
+    # if not os.path.isdir(output):
+    #     os.mkdir(output)
 
-    comp = pd.read_csv(exp + "4mers", delimiter=',', header=None).to_numpy()
+    comp = pd.read_csv(data_path + "4mers", delimiter=',', header=None).to_numpy()
 
     # RUN SEQ2COVVEC AND GET THE 16MERS FILE BEFORE THE BELOW STEP
-    
-
     # essential data
-    data = np.load(data_path)
+    data = np.load(data_path + "data.npz")
     edges = data['edges']
     # comp = data['scaled']
-    comp = pd.read_csv(output + "4mers", delimiter=',', header=None).to_numpy()
-    covg = pd.read_csv(output + "16mers", delimiter=' ', header=None).to_numpy() 
+    comp = pd.read_csv(data_path + "4mers", delimiter=',', header=None).to_numpy()
+    covg = pd.read_csv(data_path + "16mers", delimiter=' ', header=None).to_numpy() 
     features_vec = np.concatenate((comp, covg), axis=1)
+
+    
 
     read_cluster = updated_clusters['classes']
 
+    print(features_vec.shape)
+    print(read_cluster.shape)
+
     # create dataset
     data = get_graph_data(features_vec, edges)
-    train_idx, y, no_classes = get_train_data(features_vec, read_cluster)
+    train_idx, y, no_classes = get_train_data(read_cluster)
 
     # sampler for training
     train_loader = NeighborSampler(data.edge_index,

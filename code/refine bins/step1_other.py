@@ -1,11 +1,11 @@
 import numpy as np
 from collections import defaultdict
 from tqdm import tqdm 
+import argparse
 
-initial_tool_results = './'
-output_folder = './output/'
 
-def create_edges():
+
+def create_edges(initial_tool_results):
     # first, the fastq file should be converted to a fasta file (external tool)
     # second, read_id conversion (external tool)
     # third, chunking and creating reads.alns and degree files (kbm2 + build_graph.sh code from oblr)
@@ -57,10 +57,10 @@ def npy_to_txt():
     # Save the array to a text file
     np.savetxt('myarray.txt', arr, fmt='%d')
 
-def get_misbinned():
+def get_misbinned(initial_results_folder, output_folder):
     # Load the edges
     print("Determining edges...")
-    edges = create_edges()
+    edges = create_edges(initial_results_folder, output_folder)
 
     print("Loading initial tool results...")
     # Load data from bins text file
@@ -89,5 +89,22 @@ def get_misbinned():
     np.save(output_folder + 'mislabeled_nodes.npy', list(mislabeled_nodes))
     print(f"{len(mislabeled_nodes)} mislabeled nodes found.")
 
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser(description="""OBLR GraphSAGE Routine.""")
 
-get_misbinned()
+    # data --> results from oblr
+    # output --> results from refiner tool
+
+    parser.add_argument('--data', '-d',
+                        help="folder where initial tool resulted files are stored",
+                        type=str,
+                        required=True)
+    parser.add_argument(
+        '--output', '-o', help="Output directory where the outputs from refining tool are stored", type=str, required=True)
+
+    args = parser.parse_args()
+
+    initial_tool_results = args.data
+    output_folder = args.output
+
+    get_misbinned(initial_tool_results, output_folder)

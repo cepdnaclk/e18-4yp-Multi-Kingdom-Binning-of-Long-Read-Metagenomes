@@ -25,7 +25,7 @@ def get_idx_maps(read_ids_file_path):
     
     with open(read_ids_file_path) as read_ids_file:
         for rid in tqdm( read_ids_file):
-            rid = rid.split(" ")[0].strip()[1:]  #modified: rid = rid.strip()[1:] 
+            rid = rid.split(" ")[0].strip()  #modified: rid = rid.strip()[1:] 
             read_id_idx[rid] = len(read_id_idx)
     return read_id_idx
 
@@ -60,11 +60,12 @@ def npy_to_txt():
 def get_misbinned(initial_results_folder, output_folder):
     # Load the edges
     print("Determining edges...")
-    edges = create_edges(initial_results_folder, output_folder)
+    edges = create_edges(initial_results_folder)
 
     print("Loading initial tool results...")
     # Load data from bins text file
     clusters = np.loadtxt(initial_tool_results + 'bins.txt', dtype=int) # TODO: file name might be different for metabcc
+    np.save(initial_results_folder + 'classes.npy' , clusters)
 
     # Create the graph
     print("Creating graph...")

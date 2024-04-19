@@ -151,20 +151,22 @@ if __name__ == '__main__':
     data_path = args.data
     output = args.output
     initial_binning_tool = args.tool
-    updated_clusters = np.load(output + 'new_classes.npz')
+    
 
     if initial_binning_tool == 'lrbinner' or initial_binning_tool=='metabcc':
         comp = np.load(data_path + "profiles/com_profs.npy")
         covg = np.load(data_path + "profiles/cov_profs.npy")
-
+        read_cluster = np.load(output + 'new_classes.npy')
     else:
         comp = pd.read_csv(data_path + "4mers", delimiter=',', header=None).to_numpy()
         # TODO: RUN SEQ2COVVEC AND GET THE 16MERS FILE BEFORE THE BELOW STEP
         covg = pd.read_csv(data_path + "16mers", delimiter=' ', header=None).to_numpy() 
+        updated_clusters = np.load(output + 'new_classes.npz')
+        read_cluster = updated_clusters['classes'] 
     
     edges = np.load(data_path +  'edges.npy')
     features_vec = np.concatenate((comp, covg), axis=1)
-    read_cluster = updated_clusters['classes']    
+       
 
     print(features_vec.shape)
     print(read_cluster.shape)

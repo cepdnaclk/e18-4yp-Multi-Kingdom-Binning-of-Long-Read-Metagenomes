@@ -8,6 +8,7 @@ import numpy as np
 import argparse
 import os
 import pandas as pd
+from tqdm import tqdm
 
 class SAGE(nn.Module):
     def __init__(self, in_channels, out_channels, num_layers, device):
@@ -134,36 +135,36 @@ if __name__ == '__main__':
     # data --> results from oblr
     # output --> results from refiner tool
 
+    parser.add_argument('--tool', '-b',
+                        help="initial binning tool",
+                        type=str,
+                        required=True)
     parser.add_argument('--data', '-d',
-                        help="folder where oblr resulted files are stored",
+                        help="folder where initial tool resulted files are stored",
                         type=str,
                         required=True)
     parser.add_argument(
-        '--output', '-o', help="Output directory", type=str, required=True)
+        '--output', '-o', help="Output directory where the outputs from refining tool are stored", type=str, required=True)
 
     args = parser.parse_args()
 
     data_path = args.data
     output = args.output
+    initial_binning_tool = args.tool
     updated_clusters = np.load(output + 'new_classes.npz')
 
-    # if not os.path.isdir(output):
-    #     os.mkdir(output)
+    if initial_binning_tool == 'lrbinner' or initial_binning_tool=='metabcc':
+        comp = np.load(data_path + "profiles/com_profs.npy")
+        covg = np.load(data_path + "profiles/cov_profs.npy")
 
-    comp = pd.read_csv(data_path + "4mers", delimiter=',', header=None).to_numpy()
-
-    # RUN SEQ2COVVEC AND GET THE 16MERS FILE BEFORE THE BELOW STEP
-    # essential data
-    data = np.load(data_path + "data.npz")
-    edges = data['edges']
-    # comp = data['scaled']
-    comp = pd.read_csv(data_path + "4mers", delimiter=',', header=None).to_numpy()
-    covg = pd.read_csv(data_path + "16mers", delimiter=' ', header=None).to_numpy() 
-    features_vec = np.concatenate((comp, covg), axis=1)
-
+    else:
+        comp = pd.read_csv(data_path + "4mers", delimiter=',', header=None).to_numpy()
+        # TODO: RUN SEQ2COVVEC AND GET THE 16MERS FILE BEFORE THE BELOW STEP
+        covg = pd.read_csv(data_path + "16mers", delimiter=' ', header=None).to_numpy() 
     
-
-    read_cluster = updated_clusters['classes']
+    edges = np.load(data_path +  'edges.npy')
+    features_vec = np.concatenate((comp, covg), axis=1)
+    read_cluster = updated_clusters['classes']    
 
     print(features_vec.shape)
     print(read_cluster.shape)

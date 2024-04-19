@@ -62,7 +62,7 @@ def get_bins_for_connected_vertices(connected_vertices_info):
     return connected_vertices_info
 
 
-clusters = np.load(initial_tool_results + 'classes.npy', dtype=int)
+clusters = np.load(initial_tool_results + 'classes.npy')
 
 def get_bin(ref_vertex):
     if len(clusters) >= ref_vertex:

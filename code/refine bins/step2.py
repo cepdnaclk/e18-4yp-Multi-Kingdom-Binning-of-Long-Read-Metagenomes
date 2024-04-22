@@ -127,6 +127,9 @@ if os.path.exists(faa_file):
   else:
     print("creating faa file from fasta file")
     return_code1, faa_file = generate_gene_faa_file(fasta_file)
+else:
+    print("creating faa file from fasta file")
+    return_code1, faa_file = generate_gene_faa_file(fasta_file)
         
 
 if return_code1 == 0:

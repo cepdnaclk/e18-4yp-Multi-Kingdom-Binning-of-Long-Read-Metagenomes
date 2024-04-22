@@ -3,8 +3,6 @@ from collections import defaultdict
 from tqdm import tqdm 
 import argparse
 
-
-
 def create_edges(initial_tool_results):
     # first, the fastq file should be converted to a fasta file (external tool)
     # second, read_id conversion (external tool)
@@ -79,16 +77,26 @@ def get_misbinned(initial_results_folder, output_folder):
     print("Checking nodes for mislabeling...")
     mislabeled_nodes = set()
     for node, label in tqdm(enumerate(clusters), total=len(clusters), desc="Checking nodes"):
-        for neighbor in graph[node]:
-            if clusters[neighbor] != label:
-                mislabeled_nodes.add(node)
-                break
+        # Count isolated nodes
+        if not graph[node]:
+            isolated_nodes_count += 1
+        else:
+            for neighbor in graph[node]:
+                if clusters[neighbor] != label:
+                    mislabeled_nodes.add(node)
+                    break
     print("Mislabeled nodes found.")
 
     # Save the mislabeled nodes to a file
     print("Saving mislabeled nodes...")
     np.save(output_folder + 'mislabeled_nodes.npy', list(mislabeled_nodes))
     print(f"{len(mislabeled_nodes)} mislabeled nodes found.")
+
+    # Write the results to a text file
+    with open(output_folder + 'output_details.txt', 'w') as f:
+        f.write(f"Number of misbinned nodes: {len(mislabeled_nodes)}\n")
+        f.write(f"Number of isolated nodes: {isolated_nodes_count}\n")
+        f.write(f"Total number of nodes: {len(graph)}\n")
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description="""OBLR GraphSAGE Routine.""")

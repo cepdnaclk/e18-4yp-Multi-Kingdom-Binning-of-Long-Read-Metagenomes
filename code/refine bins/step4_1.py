@@ -145,6 +145,11 @@ if __name__ == '__main__':
                         required=True)
     parser.add_argument(
         '--output', '-o', help="Output directory where the outputs from refining tool are stored", type=str, required=True)
+    parser.add_argument('--epochs', '-e',
+                        help="number of epochs to run",
+                        type=str,
+                        required=False,
+                        default=100)
 
     args = parser.parse_args()
 
@@ -206,7 +211,7 @@ if __name__ == '__main__':
     y = y.to(device)
 
     # actual training
-    epochs = 100
+    epochs = int(args.epochs)
     losses = []
     prev_loss = 100
 

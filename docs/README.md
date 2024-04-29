@@ -162,7 +162,16 @@ Marker genes are specific DNA or protein sequences that indicate the presence of
 
 ## Results and Analysis
 
-
+| Dataset    | Sample ID    | Precision(%) | Recall(%)   | F1-score(%)   | ARI(%)      |
+|------------|--------------|--------------|-------------|---------------|-------------|
+|SRR9328980  | OBLR         | 97.96        | 97.46       | 97.71         | 97.63       |
+|            | GraphK-LR    | 98.44        | 97.91       | 98.17         | 98.19       |
+|            |              |              |             |               |             |
+|ERR97765782 | OBLR         | 63.81        | 77.77       | 70.10         | 52.01       |
+|            | GraphK-LR    | 64.65        | 79.08       | 71.14         | 53.11       |
+|            |              |              |             |               |             |
+|            | LRBinner     | 50.35        | 87.73       | 63.98         | 44.48       |
+|            | GraphK-LR    | 50.58        | 88.10       | 64.26         | 45.02       |
 
 ## Conclusion
 

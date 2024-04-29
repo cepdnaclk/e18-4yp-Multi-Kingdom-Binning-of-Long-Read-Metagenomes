@@ -108,7 +108,7 @@ Our methodology comprises two main stages: preprocessing and refining.
 ### Preprocessing
 
 <p align="center">
-<img src="./images/preprocessing.png" alt="Workflow" width="700" title="Workflow">
+<img src="./images/preprocess.png" alt="Workflow" width="700" title="Workflow">
 </p>
 
 <p style="text-align: justify">

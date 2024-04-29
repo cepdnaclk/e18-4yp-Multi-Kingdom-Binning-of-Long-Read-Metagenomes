@@ -177,6 +177,8 @@ A metagenomic binning refinement tool for long reads, which can be used in conju
 
 ## Conclusion
 
+In conclusion, our refinement tool, GraphK-LR, has marginally enhanced initial binning results, by approximately 1% in evaluation criteria. However, this improvement falls short of significance. We are committed to advancing our refinement techniques further. Notably, existing tools such as OBLR, LRBinner, and MetaBCC already employ methodologies ranging from read overlap graphs to composition and coverage features in their binning processes. As such, we assume that our refiner may not substantially impact their outcomes. To explore alternative avenues for enhancement, we aim to experiment with SemiBin2, another long-read binning tool employing a completely different approach. Through rigorous testing and comparison, we hope to improve our tool's performance and contribute to the ongoing evolution of binning methodologies.
+
 ## Publications
 [//]: # "Note: Uncomment each once you uploaded the files to the repository"
 

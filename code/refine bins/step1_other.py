@@ -76,6 +76,7 @@ def get_misbinned(initial_results_folder, output_folder):
     # Find the mislabeled nodes
     print("Checking nodes for mislabeling...")
     mislabeled_nodes = set()
+    isolated_nodes_count = 0
     for node, label in tqdm(enumerate(clusters), total=len(clusters), desc="Checking nodes"):
         # Count isolated nodes
         if not graph[node]:

@@ -108,11 +108,11 @@ Our methodology comprises two main stages: preprocessing and refining.
 ### Preprocessing
 
 <p align="center">
-<img src="./images/preprocessing.JPG" alt="Workflow" width="50%" title="Workflow">
+<img src="./images/preprocessing.png" alt="Workflow" width="700" title="Workflow">
 </p>
 
 <p style="text-align: justify">
-In the preprocessing stage, we focus on generating a read overlap graph using existing tools.We employ read overlap graphs due to their ability to incorporate overlapping information between reads into the binning process. They also facilitate the identification of mis-binned reads, which are crucial for improving binning accuracy.OBLR is one such tool that generates a read overlap graph as part of its binning process. However, for other tools like LRBinner or MetaBCC-LR, we need to generate overlap graphs, which is the primary task in the preprocessing phase.
+In the preprocessing stage, our focus lies in the generation of a read overlap graph utilizing established tools. The employment of read overlap graphs is paramount due to their capacity to integrate overlapping information between reads into the binning process. This integration not only enhances the accuracy of binning but also streamlines the identification of mis-binned reads, a critical aspect of refining binning outcomes. Among the tools available, OBLR stands out as a solution capable of seamlessly generating a read overlap graph as an integral part of its binning process. However, for alternative tools such as LRBinner or MetaBCC-LR, the generation of overlap graphs becomes the primary undertaking within the preprocessing phase.
 </p>
 
 ### Refining
@@ -120,19 +120,19 @@ In the preprocessing stage, we focus on generating a read overlap graph using ex
 The refining stage involves several steps aimed at enhancing the quality of bins obtained from preprocessing.
 
 <p align="center">
-<img src="./images/refining.JPG" alt="Methodology" width="50%" title="Methodology">
+<img src="./images/refining.png" alt="Methodology" width="850" title="Methodology">
 </p>
 
   
-- Initially, the output from preprocessing, i.e., the read overlap graph, is utilized to identify mis-binned reads. Mis-binned reads, located at the borders of bins, are prone to being incorrectly binned due to their ambiguous nature. Identifying and addressing these reads is crucial for improving binning accuracy.
+- Initially, the output from preprocessing, i.e., the read overlap graph, is utilized to identify mis-binned reads. Mis-binned reads, located at the borders of bins, are prone to being incorrectly binned due to their ambiguous nature.
 
-- Following identification, all reads in the dataset are annotated according to kingdom-level information, including prokaryotes (Bacteria, Archaea), eukaryotes (Protists, Fungi), and viruses. Prokaryotes and eukaryotes are identified using kingdom-specific single copy marker genes, while viruses are identified using orthologous gene groups obtained from VOG (Viral Orthologous Groups) and PHROG (Phage and Virus Orthologous Groups) databases. This annotation process provides crucial insights into the taxonomic composition of the dataset. Reads are then annotated with particular marker genes if they exist, facilitating further processing and characterization of the genomic content.
+- Following the initial identification step, all reads within the dataset undergo annotation based on kingdom-level taxonomy, encompassing prokaryotes (Bacteria, Archaea), eukaryotes (Protists, Fungi), and viruses. Prokaryotes and eukaryotes are discerned utilizing kingdom-specific single-copy marker genes, whereas viruses are distinguished through orthologous gene groups sourced from VOG (Viral Orthologous Groups) and PHROG (Phage and Virus Orthologous Groups) databases.  This annotation process provides crucial insights into the taxonomic composition of reads. 
 
-- Mis-binned reads are subsequently relabeled based on their allocated marker genes. If a read cannot be confidently relabeled, it is retained as ambiguous for resolution in subsequent steps. This iterative refinement process ensures that bins are accurately labeled and representative of their genomic content.
+- Mis-binned reads are subsequently relabeled based on their allocated marker genes. If a read cannot be confidently relabeled, it is retained as ambiguous for resolution in subsequent steps. This iterative refinement process ensures that bins are accurately labeled.
 
-- The final step involves label propagation, aiming to relabel all remaining ambiguous reads. This process utilizes a Graph Neural Network (GNN) that considers both composition and coverage information of reads. By leveraging advanced machine learning techniques, we can effectively resolve ambiguous assignments and produce refined bins that accurately reflect the genomic composition of the dataset.
+- The final step involves label propagation, aiming to relabel all remaining ambiguous reads. This process utilizes a Graph Neural Network (GNN) that considers both composition and coverage information of reads. By leveraging advanced machine learning techniques, we can effectively resolve ambiguous assignments and produce refined bins.
 
-Through these comprehensive steps, our methodology enables the generation of refined bins that are not only accurate but also provide valuable insights into the taxonomic and functional characteristics of the underlying genomic content.
+Through these comprehensive steps, our methodology enables the generation of refined bins that consider their kingdom-level information, reflecting the diverse biological entities present in the dataset.
 
 
 ## Experiment Setup and Implementation

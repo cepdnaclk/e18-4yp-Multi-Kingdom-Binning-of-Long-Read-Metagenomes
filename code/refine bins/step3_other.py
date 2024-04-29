@@ -21,7 +21,7 @@ initial_binning_tool = sys.argv[3]
 vertices_file = output + "/mis_binned_reads.npy"
 marker_scores = output + "/marker_scores.txt"
 edges_file = initial_tool_results + "/edges.npy"
-updated_classes_file = output + "/new_classes.npz"
+updated_classes_file = output + "/new_classes.npy"
 
 
 # Find marker genes of connected vertices
@@ -62,36 +62,14 @@ def get_bins_for_connected_vertices(connected_vertices_info):
     return connected_vertices_info
 
 
-classes_file = initial_tool_results + '/classes.npz'
+clusters = np.load(initial_tool_results + 'classes.npy')
 
-# Load the .npz file
-data = np.load(classes_file)
-classes = data['classes']
-classified = data['classified']
-from functools import lru_cache
-
-@lru_cache(maxsize=None)
 def get_bin(ref_vertex):
-    global classes, classified
-    # if initial_binning_tool == 'lrbinner' or initial_binning_tool == 'metabcc':
-    #     read_cluster = np.loadtxt(initial_tool_results + 'bins.txt', dtype=int)
-    #     bin = read_cluster[ref_vertex]
-
-    # else:
-
-    # Use NumPy advanced indexing to find the class value
-    mask = classified == ref_vertex
-    class_value = classes[mask]
-
-    if (len(class_value) > 0):
-        bin = class_value[0]
+    if len(clusters) >= ref_vertex:
+        return clusters[ref_vertex]
     else:
-        bin = -1
-
-    # result is always received as an array
-    return bin
+        return -1    
     
-
 # Extract the ambiguous vertices
 def read_vertex(filename):
 
@@ -149,30 +127,18 @@ def get_connected_vertices(edges_file, vertex):
 
 # Update the bin when the vertices is given with its bin
 def update_bin(new_classes_file, vertices_info):
-    classes_file = initial_tool_results + '/classes.npz'
-    old_classes_file = classes_file
+    classes_file = initial_tool_results + '/classes.npy'
 
     # Load the classes.npz file
-    data = np.load(old_classes_file)
-
-    # Extract the arrays from the loaded data
-    classes = data['classes']
-    classified = data['classified']
+    new_classes = np.load(classes_file)
 
     # Iterate through each vertex
     for ref_vertex in vertices_info:
 
-        # vertex should be an integer to use as an index
-        vertex = int(ref_vertex)
-
-        # Use NumPy advanced indexing to find the class value
-        mask = classified == vertex
-        classes[mask] = vertices_info[ref_vertex]['bin']
-
-        #print(f"Bin - {classes[mask]}")
+        new_classes[ref_vertex] = vertices_info[ref_vertex]['bin']
 
     # Save the updated classified array back to the .npz file
-    np.savez(new_classes_file, classes=classes, classified=classified)
+    np.save(new_classes_file, new_classes)
 
 
 def annotate_bins():

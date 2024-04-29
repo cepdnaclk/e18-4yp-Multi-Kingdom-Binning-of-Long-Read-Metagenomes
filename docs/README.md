@@ -168,12 +168,19 @@ Marker genes are specific DNA or protein sequences that indicate the presence of
 [//]: # "Note: Uncomment each once you uploaded the files to the repository"
 
 1. [Semester 7 report](./documents/ReviewPaper.pdf)
-<!-- 2. [Semester 7 slides](./) -->
+2. [Semester 7 slides](./documents/Proposal-Presentation.pdf)
 <!-- 3. [Semester 8 report](./) -->
 <!-- 4. [Semester 8 slides](./) -->
 <!-- 5. Author 1, Author 2 and Author 3 "Research paper title" (2021). [PDF](./). -->
 
 ## References
+
+Wickramarachchi, A., Mallawaarachchi, V., Rajan, V., & Lin, Y. (2020). MetaBCC-LR: metagenomics binning by coverage and composition for long reads. Bioinformatics (Oxford, England), 36(Suppl_1), i3–i11. https://doi.org/10.1093/bioinformatics/btaa441
+
+Wickramarachchi, A., & Lin, Y. (2022). Binning long reads in metagenomics datasets using composition and coverage information. Algorithms for molecular biology : AMB, 17(1), 14. https://doi.org/10.1186/s13015-022-00221-z 
+
+Wickramarachchi, A., & Lin, Y. (2022, May). Metagenomics binning of long reads using read-overlap graphs. In RECOMB International Workshop on Comparative Genomics (pp. 260-278). Cham: Springer International Publishing.
+
 
 ## Links
 

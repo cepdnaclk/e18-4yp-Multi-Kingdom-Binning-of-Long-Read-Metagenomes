@@ -49,21 +49,18 @@ This research introduces [G11 refiner], a novel long-read binning refiner design
 <p align="center">
   <img src="https://useruploads.socratic.org/puDVmAVgSBy1dqrzo38g_cellsToDNA.gif" alt="Alt text" width="500" height="320">
 </p>
-
 <p style="text-align: justify">
-Our planet harbors a hidden universe teeming with life forms invisible to the naked eye – microorganisms. These diverse single-celled organisms, including bacteria, archaea, protists, and fungi, exist in a multitude of environments, from the scorching deserts to the frigid depths of the oceans. Despite their minute size, microorganisms play a critical role in the intricate tapestry of life on Earth.
+Every living organism, from towering trees to microscopic bacteria, is built from fundamental units called cells. These microscopic marvels serve a dual purpose: providing structure and carrying out the essential chemical reactions that sustain life. Tucked away within the cell's nucleus lies the blueprint for the entire organism – its genome. This blueprint dictates everything from physical appearance to specialized functions. The code is stored on thread-like structures called chromosomes, made of DNA. DNA looks like a twisted ladder with four rungs labeled A, C, G, and T. The order of these rungs is the code itself, telling the cell how to make proteins, the workers that do all the cell's jobs. Genes are sections of the code with instructions for building specific proteins.
 </p>
 <p style="text-align: justify">
-Every living organism, from towering trees to microscopic bacteria, is built from fundamental units called cells. These microscopic marvels serve a dual purpose: providing structure and carrying out the essential chemical reactions that sustain life. Tucked away within the cell's nucleus lies the blueprint for the entire organism – its genome. This blueprint dictates everything from physical appearance to specialized functions.
+This is where DNA sequencing comes into play. DNA sequencing is a powerful technique that allows scientists to determine the exact order of the building blocks (nucleotides) that make up an organism's DNA. This sequence, often referred to as the genetic code, is like an instruction manual containing the blueprint for life. By analyzing the DNA sequence of microbes, scientists can gain valuable insights into their diversity, function and evolution.
 </p>
 <p style="text-align: justify">
-The genome itself is meticulously organized into thread-like structures called chromosomes, composed of DNA and proteins. DNA, the molecule of heredity, boasts a unique double helix structure. Each rung of this ladder is formed by a pair of molecules called nucleotides, identified by specific letters: A, C, G, and T. The specific sequence of these nucleotides along the DNA strand acts as a coded message that dictates the production of proteins, the workhorses of the cell. These proteins perform a multitude of tasks, ensuring the proper functioning of the organism. Genes, discrete segments along the DNA strand, house the instructions for specific proteins or functional RNA molecules. These genes are the cornerstone of heredity, faithfully passing traits from parents to offspring, guaranteeing the continuation of life in all its magnificent diversity.  
-</p>
-<p style="text-align: justify">
-While most microorganisms are single-celled entities, viruses occupy a unique niche. These infectious agents are much smaller and simpler than cells, lacking the complex machinery for independent life. Viruses consist of genetic material (either DNA or RNA) enclosed in a protein coat. They rely on hijacking the cellular machinery of host organisms to replicate and spread.  Despite their parasitic nature, viruses play a significant role in ecosystems, influencing the evolution of their hosts and participating in nutrient cycling.   
+However, DNA sequencing alone often results in a massive amount of fragmented data from various organisms within a sample. This is where binning comes in. Binning is a computational technique used to group these fragmented DNA sequences (often called reads) back together based on their similarity.
 </p>
 
 ## Related works
+
 <p style="text-align: justify">
 <b>Early long-reads Binning Tools<br></b>
 Megan-LR stands out as one of the earliest tools, employing a reference database. Megan-LR utilizes a protein-alignment-based approach and introduces two algorithms; one for taxonomic binning (based on Lowest Common Ancestor) and another for functional binning (based on an Interval-tree algorithm).
@@ -176,6 +173,7 @@ Marker genes are specific DNA or protein sequences that indicate the presence of
 <!-- 4. [Semester 8 slides](./) -->
 <!-- 5. Author 1, Author 2 and Author 3 "Research paper title" (2021). [PDF](./). -->
 
+## References
 
 ## Links
 

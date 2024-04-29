@@ -49,21 +49,18 @@ This research introduces [G11 refiner], a novel long-read binning refiner design
 <p align="center">
   <img src="https://useruploads.socratic.org/puDVmAVgSBy1dqrzo38g_cellsToDNA.gif" alt="Alt text" width="500" height="320">
 </p>
-
 <p style="text-align: justify">
-Our planet harbors a hidden universe teeming with life forms invisible to the naked eye – microorganisms. These diverse single-celled organisms, including bacteria, archaea, protists, and fungi, exist in a multitude of environments, from the scorching deserts to the frigid depths of the oceans. Despite their minute size, microorganisms play a critical role in the intricate tapestry of life on Earth.
+Every living organism, from towering trees to microscopic bacteria, is built from fundamental units called cells. These microscopic marvels serve a dual purpose: providing structure and carrying out the essential chemical reactions that sustain life. Tucked away within the cell's nucleus lies the blueprint for the entire organism – its genome. This blueprint dictates everything from physical appearance to specialized functions. The code is stored on thread-like structures called chromosomes, made of DNA. DNA looks like a twisted ladder with four rungs labeled A, C, G, and T. The order of these rungs is the code itself, telling the cell how to make proteins, the workers that do all the cell's jobs. Genes are sections of the code with instructions for building specific proteins.
 </p>
 <p style="text-align: justify">
-Every living organism, from towering trees to microscopic bacteria, is built from fundamental units called cells. These microscopic marvels serve a dual purpose: providing structure and carrying out the essential chemical reactions that sustain life. Tucked away within the cell's nucleus lies the blueprint for the entire organism – its genome. This blueprint dictates everything from physical appearance to specialized functions.
+This is where DNA sequencing comes into play. DNA sequencing is a powerful technique that allows scientists to determine the exact order of the building blocks (nucleotides) that make up an organism's DNA. This sequence, often referred to as the genetic code, is like an instruction manual containing the blueprint for life. By analyzing the DNA sequence of microbes, scientists can gain valuable insights into their diversity, function and evolution.
 </p>
 <p style="text-align: justify">
-The genome itself is meticulously organized into thread-like structures called chromosomes, composed of DNA and proteins. DNA, the molecule of heredity, boasts a unique double helix structure. Each rung of this ladder is formed by a pair of molecules called nucleotides, identified by specific letters: A, C, G, and T. The specific sequence of these nucleotides along the DNA strand acts as a coded message that dictates the production of proteins, the workhorses of the cell. These proteins perform a multitude of tasks, ensuring the proper functioning of the organism. Genes, discrete segments along the DNA strand, house the instructions for specific proteins or functional RNA molecules. These genes are the cornerstone of heredity, faithfully passing traits from parents to offspring, guaranteeing the continuation of life in all its magnificent diversity.  
-</p>
-<p style="text-align: justify">
-While most microorganisms are single-celled entities, viruses occupy a unique niche. These infectious agents are much smaller and simpler than cells, lacking the complex machinery for independent life. Viruses consist of genetic material (either DNA or RNA) enclosed in a protein coat. They rely on hijacking the cellular machinery of host organisms to replicate and spread.  Despite their parasitic nature, viruses play a significant role in ecosystems, influencing the evolution of their hosts and participating in nutrient cycling.   
+However, DNA sequencing alone often results in a massive amount of fragmented data from various organisms within a sample. This is where binning comes in. Binning is a computational technique used to group these fragmented DNA sequences (often called reads) back together based on their similarity.
 </p>
 
 ## Related works
+
 <p style="text-align: justify">
 <b>Early long-reads Binning Tools<br></b>
 Megan-LR stands out as one of the earliest tools, employing a reference database. Megan-LR utilizes a protein-alignment-based approach and introduces two algorithms; one for taxonomic binning (based on Lowest Common Ancestor) and another for functional binning (based on an Interval-tree algorithm).
@@ -111,7 +108,7 @@ Our methodology comprises two main stages: preprocessing and refining.
 ### Preprocessing
 
 <p align="center">
-<img src="./images/WorkFlow.JPG" alt="Workflow" width="50%" title="Workflow">
+<img src="./images/preprocessing.JPG" alt="Workflow" width="50%" title="Workflow">
 </p>
 
 <p style="text-align: justify">
@@ -123,10 +120,8 @@ In the preprocessing stage, we focus on generating a read overlap graph using ex
 The refining stage involves several steps aimed at enhancing the quality of bins obtained from preprocessing.
 
 <p align="center">
-<img src="./images/methodology.JPG" alt="Methodology" width="50%" title="Methodology">
+<img src="./images/refining.JPG" alt="Methodology" width="50%" title="Methodology">
 </p>
-
-<p style="text-align: justify">
 
   
 - Initially, the output from preprocessing, i.e., the read overlap graph, is utilized to identify mis-binned reads. Mis-binned reads, located at the borders of bins, are prone to being incorrectly binned due to their ambiguous nature. Identifying and addressing these reads is crucial for improving binning accuracy.
@@ -138,9 +133,32 @@ The refining stage involves several steps aimed at enhancing the quality of bins
 - The final step involves label propagation, aiming to relabel all remaining ambiguous reads. This process utilizes a Graph Neural Network (GNN) that considers both composition and coverage information of reads. By leveraging advanced machine learning techniques, we can effectively resolve ambiguous assignments and produce refined bins that accurately reflect the genomic composition of the dataset.
 
 Through these comprehensive steps, our methodology enables the generation of refined bins that are not only accurate but also provide valuable insights into the taxonomic and functional characteristics of the underlying genomic content.
-</p>
+
 
 ## Experiment Setup and Implementation
+
+This section details the data used in experiments and tools employed in the overall workflow of the implementation.
+
+#### Data
+##### Testing Binning Tool Functionality
+The simLoRD read simulator was used to generate datasets containing diverse kingdom-level microorganisms for initial testing of binning tool functionality. Mock community reference sequences were employed in this process.
+
+##### Current Experimental Setup
+The current experimental setup utilizes datasets from two chemistries: R9.4 (older long reads) and R10.4 (latest, most accurate long reads). R10.4 data is primarily used due to its superior read accuracy.
+
+Examples:
+- SRR9328980 (includes Bacteria and Eukaryota)
+- ERR97765782 (includes Bacteria, Archaea, Eukaryota, and Viruses)
+
+##### Marker Genes
+Marker genes are specific DNA or protein sequences that indicate the presence of a particular organism or functional group. The information for these marker genes is stored in hidden Markov model files (.hmm files).  Currently, a combined database containing 38,991 marker genes related to bacteria, fungi, protists, and viruses is used for analysis.
+
+#### Tools
+- Sec2covvec - To get the Kmer coverage profiles
+- Prodigal - To predict protein-coding sequences from reads.
+- HMMER - To scan marker genes within protein-coded sequences
+- Minimap - To get the mapping between reads and the actual species bin they belong
+
 
 ## Results and Analysis
 
@@ -155,6 +173,7 @@ Through these comprehensive steps, our methodology enables the generation of ref
 <!-- 4. [Semester 8 slides](./) -->
 <!-- 5. Author 1, Author 2 and Author 3 "Research paper title" (2021). [PDF](./). -->
 
+## References
 
 ## Links
 

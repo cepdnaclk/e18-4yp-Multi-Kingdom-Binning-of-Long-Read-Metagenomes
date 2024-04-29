@@ -175,19 +175,19 @@ Marker genes are specific DNA or protein sequences that indicate the presence of
 
 ## References
 
-Wickramarachchi, A., Mallawaarachchi, V., Rajan, V., & Lin, Y. (2020). MetaBCC-LR: metagenomics binning by coverage and composition for long reads. Bioinformatics (Oxford, England), 36(Suppl_1), i3–i11. https://doi.org/10.1093/bioinformatics/btaa441
+[1] Wickramarachchi, A., Mallawaarachchi, V., Rajan, V., & Lin, Y. (2020). MetaBCC-LR: metagenomics binning by coverage and composition for long reads. Bioinformatics (Oxford, England), 36(Suppl_1), i3–i11. https://doi.org/10.1093/bioinformatics/btaa441
 
-Wickramarachchi, A., & Lin, Y. (2022). Binning long reads in metagenomics datasets using composition and coverage information. Algorithms for molecular biology : AMB, 17(1), 14. https://doi.org/10.1186/s13015-022-00221-z 
+[2] Wickramarachchi, A., & Lin, Y. (2022). Binning long reads in metagenomics datasets using composition and coverage information. Algorithms for molecular biology : AMB, 17(1), 14. https://doi.org/10.1186/s13015-022-00221-z 
 
-Wickramarachchi, A., & Lin, Y. (2022, May). Metagenomics binning of long reads using read-overlap graphs. In RECOMB International Workshop on Comparative Genomics (pp. 260-278). Cham: Springer International Publishing.
+[3] Wickramarachchi, A., & Lin, Y. (2022, May). Metagenomics binning of long reads using read-overlap graphs. In RECOMB International Workshop on Comparative Genomics (pp. 260-278). Cham: Springer International Publishing.
 
 
 ## Links
 
 [//]: # ( NOTE: EDIT THIS LINKS WITH YOUR REPO DETAILS )
 
-- [Project Repository](https://github.com/cepdnaclk/repository-name)
-- [Project Page](https://cepdnaclk.github.io/repository-name)
+- [Project Repository](https://github.com/cepdnaclk/e18-4yp-Multi-Kingdom-Binning-of-Long-Read-Metagenomes)
+- [Project Page](https://cepdnaclk.github.io/e18-4yp-Multi-Kingdom-Binning-of-Long-Read-Metagenomes)
 - [Department of Computer Engineering](http://www.ce.pdn.ac.lk/)
 - [University of Peradeniya](https://eng.pdn.ac.lk/)
 

@@ -111,7 +111,7 @@ Our methodology comprises two main stages: preprocessing and refining.
 ### Preprocessing
 
 <p align="center">
-<img src="./images/WorkFlow.JPG" alt="Workflow" width="50%" title="Workflow">
+<img src="./images/preprocessing.JPG" alt="Workflow" width="50%" title="Workflow">
 </p>
 
 <p style="text-align: justify">
@@ -123,10 +123,8 @@ In the preprocessing stage, we focus on generating a read overlap graph using ex
 The refining stage involves several steps aimed at enhancing the quality of bins obtained from preprocessing.
 
 <p align="center">
-<img src="./images/methodology.JPG" alt="Methodology" width="50%" title="Methodology">
+<img src="./images/refining.JPG" alt="Methodology" width="50%" title="Methodology">
 </p>
-
-<p style="text-align: justify">
 
   
 - Initially, the output from preprocessing, i.e., the read overlap graph, is utilized to identify mis-binned reads. Mis-binned reads, located at the borders of bins, are prone to being incorrectly binned due to their ambiguous nature. Identifying and addressing these reads is crucial for improving binning accuracy.
@@ -138,7 +136,7 @@ The refining stage involves several steps aimed at enhancing the quality of bins
 - The final step involves label propagation, aiming to relabel all remaining ambiguous reads. This process utilizes a Graph Neural Network (GNN) that considers both composition and coverage information of reads. By leveraging advanced machine learning techniques, we can effectively resolve ambiguous assignments and produce refined bins that accurately reflect the genomic composition of the dataset.
 
 Through these comprehensive steps, our methodology enables the generation of refined bins that are not only accurate but also provide valuable insights into the taxonomic and functional characteristics of the underlying genomic content.
-</p>
+
 
 ## Experiment Setup and Implementation
 

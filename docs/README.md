@@ -41,7 +41,7 @@ title: Long-reads Binning For Microbial Metagenomics Considering Multi-kingdoms
 DNA metagenomics, which analyzes the entire genetic pool of an environmental sample, offers powerful insights into microbial communities. Traditionally, short-read sequencing technology dominated metagenomic analysis. As sequencing technology advanced, long-read sequencing emerged, generating significantly longer reads. Then several binning tools have developed enabling reconstruction of more complete genomes. Most of these tools have used coverage and composition features for binning procedure and have achieved good accuracy. 
 </p>
 <p style="text-align: justify">
-This research introduces [G11 refiner], a novel long-read binning refiner designed to address further additional read features like kingdom level information of microorganisms to enhance the accuracy and work along with long read binning tools like OBLR, MetaBCC-LR. By incorporating these advancements, [G11 refiner] aims to significantly improve the accuracy and efficiency of binning long-reads by using multi-kingdom data. 
+This research introduces GraphK-LR Refiner, a novel long-read binning refiner designed to address further additional read features like kingdom level information of microorganisms to enhance the accuracy and work along with long read binning tools like OBLR, MetaBCC-LR. By incorporating these advancements, GraphK-LR aims to significantly improve the accuracy and efficiency of binning long-reads by using multi-kingdom data. 
 </p>
 
 ## Background 
@@ -159,6 +159,8 @@ Marker genes are specific DNA or protein sequences that indicate the presence of
 - HMMER - To scan marker genes within protein-coded sequences
 - Minimap - To get the mapping between reads and the actual species bin they belong
 
+#### Implementation: GraphK-LR Refiner
+A metagenomic binning refinement tool for long reads, which can be used in conjunction with long-read binning tools such as OBLR, MetaBCC-LR, and others. This refinement tool considers information at the microorganism kingdom level during the refinement process and utilizes a read-overlap graph approach. The tool is being finalized as a Python-based command-line tool.
 
 ## Results and Analysis
 

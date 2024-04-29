@@ -120,7 +120,7 @@ In the preprocessing stage, our focus lies in the generation of a read overlap g
 The refining stage involves several steps aimed at enhancing the quality of bins obtained from preprocessing.
 
 <p align="center">
-<img src="./images/refining.png" alt="Methodology" width="850" title="Methodology">
+<img src="./images/refiner.png" alt="Methodology" width="850" title="Methodology">
 </p>
 
   
@@ -167,7 +167,7 @@ Marker genes are specific DNA or protein sequences that indicate the presence of
 ## Publications
 [//]: # "Note: Uncomment each once you uploaded the files to the repository"
 
-<!-- 1. [Semester 7 report](./) -->
+1. [Semester 7 report](./documents/ReviewPaper.pdf)
 <!-- 2. [Semester 7 slides](./) -->
 <!-- 3. [Semester 8 report](./) -->
 <!-- 4. [Semester 8 slides](./) -->

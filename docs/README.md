@@ -3,8 +3,8 @@ layout: home
 permalink: index.html
 
 # Please update this with your repository name and title
-repository-name: eYY-4yp-project-template
-title:
+repository-name: e18-4yp-Multi-Kingdom-Binning-of-Long-Read-Metagenomes
+title: Long-reads Binning For Microbial Metagenomics Considering Multi-kingdoms
 ---
 
 [comment]: # "This is the standard layout for the project, but you can clean this and use your own template"
@@ -161,6 +161,8 @@ Marker genes are specific DNA or protein sequences that indicate the presence of
 
 
 ## Results and Analysis
+
+
 
 ## Conclusion
 

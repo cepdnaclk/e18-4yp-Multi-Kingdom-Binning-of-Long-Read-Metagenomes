@@ -140,6 +140,9 @@ Through these comprehensive steps, our methodology enables the generation of ref
 
 ## Experiment Setup and Implementation
 
+This section details the data used in experiments and tools employed in the overall workflow of the implementation.
+
+### Data
 #### Testing Binning Tool Functionality
 The simLoRD read simulator was used to generate datasets containing diverse kingdom-level microorganisms for initial testing of binning tool functionality. Mock community reference sequences were employed in this process.
 
@@ -150,8 +153,14 @@ Examples:
 - SRR9328980 (includes Bacteria and Eukaryota)
 - ERR97765782 (includes Bacteria, Archaea, Eukaryota, and Viruses)
 
-#### HMMER Tool
-The HMMER tool is used to identify marker genes within predicted protein-coding sequences. Marker genes are specific DNA or protein sequences that indicate the presence of a particular organism or functional group. The information for these marker genes is stored in hidden Markov model files (.hmm files).  Currently, a combined database containing 38,991 marker genes related to bacteria, fungi, protists, and viruses is used for analysis.
+#### Marker Genes
+Marker genes are specific DNA or protein sequences that indicate the presence of a particular organism or functional group. The information for these marker genes is stored in hidden Markov model files (.hmm files).  Currently, a combined database containing 38,991 marker genes related to bacteria, fungi, protists, and viruses is used for analysis.
+
+### Tools
+- Sec2covvec - To get the Kmer coverage profiles
+- Prodigal - To predict protein-coding sequences from reads.
+- HMMER - To scan marker genes within protein-coded sequences
+- Minimap - To get the mapping between reads and the actual species bin they belong
 
 
 ## Results and Analysis

@@ -37,6 +37,12 @@ title:
 
 
 ## Abstract
+<p style="text-align: justify">
+DNA metagenomics, which analyzes the entire genetic pool of an environmental sample, offers powerful insights into microbial communities. Traditionally, short-read sequencing technology dominated metagenomic analysis. As sequencing technology advanced, long-read sequencing emerged, generating significantly longer reads. Then several binning tools have developed enabling reconstruction of more complete genomes. Most of these tools have used coverage and composition features for binning procedure and have achieved good accuracy. 
+</p>
+<p style="text-align: justify">
+This research introduces [G11 refiner], a novel long-read binning refiner designed to address further additional read features like kingdom level information of microorganisms to enhance the accuracy and work along with long read binning tools like OBLR, MetaBCC-LR. By incorporating these advancements, [G11 refiner] aims to significantly improve the accuracy and efficiency of binning long-reads by using multi-kingdom data. 
+</p>
 
 ## Background 
 
@@ -45,7 +51,16 @@ title:
 </p>
 
 <p style="text-align: justify">
-Microorganisms thrive in a multitude of environments worldwide, fulfilling critical roles in human health, agriculture, food production, climate regulation, and numerous other processes. Every living organism consists of tiny units known as cells, serving dual functions of providing structure and facilitating various biological processes. Enclosed within the nucleus of each cell lies the genome, a comprehensive blueprint encompassing instructions for the construction and sustenance of the entire organism, including its distinct characteristics and behaviors. This genetic blueprint resides within slender, thread-like structures called chromosomes, composed of DNA and proteins. DNA, the carrier of genetic information, adopts a double helix structure comprising two intertwined strands. Comprised of nucleotides, each denoted by specific letters—A (Adenine), C (Cytosine), G (Guanine), or T (Thymine)—DNA serves as the foundation for genetic coding. Genes, the fundamental units of heredity, constitute segments of DNA containing instructions for synthesizing proteins or functional RNA molecules. Serving as conduits of hereditary information, genes perpetuate traits across generations, thereby ensuring the perpetuation of life.
+Our planet harbors a hidden universe teeming with life forms invisible to the naked eye – microorganisms. These diverse single-celled organisms, including bacteria, archaea, protists, and fungi, exist in a multitude of environments, from the scorching deserts to the frigid depths of the oceans. Despite their minute size, microorganisms play a critical role in the intricate tapestry of life on Earth.
+</p>
+<p style="text-align: justify">
+Every living organism, from towering trees to microscopic bacteria, is built from fundamental units called cells. These microscopic marvels serve a dual purpose: providing structure and carrying out the essential chemical reactions that sustain life. Tucked away within the cell's nucleus lies the blueprint for the entire organism – its genome. This blueprint dictates everything from physical appearance to specialized functions.
+</p>
+<p style="text-align: justify">
+The genome itself is meticulously organized into thread-like structures called chromosomes, composed of DNA and proteins. DNA, the molecule of heredity, boasts a unique double helix structure. Each rung of this ladder is formed by a pair of molecules called nucleotides, identified by specific letters: A, C, G, and T. The specific sequence of these nucleotides along the DNA strand acts as a coded message that dictates the production of proteins, the workhorses of the cell. These proteins perform a multitude of tasks, ensuring the proper functioning of the organism. Genes, discrete segments along the DNA strand, house the instructions for specific proteins or functional RNA molecules. These genes are the cornerstone of heredity, faithfully passing traits from parents to offspring, guaranteeing the continuation of life in all its magnificent diversity.  
+</p>
+<p style="text-align: justify">
+While most microorganisms are single-celled entities, viruses occupy a unique niche. These infectious agents are much smaller and simpler than cells, lacking the complex machinery for independent life. Viruses consist of genetic material (either DNA or RNA) enclosed in a protein coat. They rely on hijacking the cellular machinery of host organisms to replicate and spread.  Despite their parasitic nature, viruses play a significant role in ecosystems, influencing the evolution of their hosts and participating in nutrient cycling.   
 </p>
 
 ## Related works

@@ -142,21 +142,21 @@ Through these comprehensive steps, our methodology enables the generation of ref
 
 This section details the data used in experiments and tools employed in the overall workflow of the implementation.
 
-### Data
-#### Testing Binning Tool Functionality
+#### Data
+##### Testing Binning Tool Functionality
 The simLoRD read simulator was used to generate datasets containing diverse kingdom-level microorganisms for initial testing of binning tool functionality. Mock community reference sequences were employed in this process.
 
-#### Current Experimental Setup
+##### Current Experimental Setup
 The current experimental setup utilizes datasets from two chemistries: R9.4 (older long reads) and R10.4 (latest, most accurate long reads). R10.4 data is primarily used due to its superior read accuracy.
 
 Examples:
 - SRR9328980 (includes Bacteria and Eukaryota)
 - ERR97765782 (includes Bacteria, Archaea, Eukaryota, and Viruses)
 
-#### Marker Genes
+##### Marker Genes
 Marker genes are specific DNA or protein sequences that indicate the presence of a particular organism or functional group. The information for these marker genes is stored in hidden Markov model files (.hmm files).  Currently, a combined database containing 38,991 marker genes related to bacteria, fungi, protists, and viruses is used for analysis.
 
-### Tools
+#### Tools
 - Sec2covvec - To get the Kmer coverage profiles
 - Prodigal - To predict protein-coding sequences from reads.
 - HMMER - To scan marker genes within protein-coded sequences

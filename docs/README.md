@@ -33,7 +33,8 @@ title: Long-reads Binning For Microbial Metagenomics Considering Multi-kingdoms
 6. [Results and Analysis](#results-and-analysis)
 7. [Conclusion](#conclusion)
 8. [Publications](#publications)
-9. [Links](#links)
+9. [References](#references)
+10. [Links](#links)
 
 
 ## Abstract

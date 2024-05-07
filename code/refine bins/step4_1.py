@@ -10,6 +10,9 @@ import os
 import pandas as pd
 from tqdm import tqdm
 
+from sklearn.manifold import TSNE
+import matplotlib.pyplot as plt
+
 class SAGE(nn.Module):
     def __init__(self, in_channels, out_channels, num_layers, device):
         super(SAGE, self).__init__()
@@ -166,15 +169,14 @@ if __name__ == '__main__':
         comp = pd.read_csv(data_path + "4mers", delimiter=',', header=None).to_numpy()
         # TODO: RUN SEQ2COVVEC AND GET THE 16MERS FILE BEFORE THE BELOW STEP
         covg = pd.read_csv(data_path + "16mers", delimiter=' ', header=None).to_numpy() 
-        updated_clusters = np.load(output + 'new_classes.npz')
+        updated_clusters = np.load(output + 'refined_classes.npz')
         read_cluster = updated_clusters['classes'] 
     
     edges = np.load(data_path +  'edges.npy')
     features_vec = np.concatenate((comp, covg), axis=1)
        
 
-    print(features_vec.shape)
-    print(read_cluster.shape)
+    print(features_vec)
 
     # create dataset
     data = get_graph_data(features_vec, edges)
@@ -223,7 +225,7 @@ if __name__ == '__main__':
 
         print(f'Epoch {epoch:02d}, Loss: {loss:.4f}')
 
-        if loss < 0.05:
+        if loss < 0.02:
             print('Early stopping, loss less than 0.05')
             break
 
@@ -233,7 +235,7 @@ if __name__ == '__main__':
     # np.savez(output + '/classes.npz', classes=classes.numpy(), classified=idx)
 
 
-    out_file = output + 'updated_bins.tsv'
+    out_file = output + 'refined_bins.tsv'
 
     classes_np = classes.numpy()
 

@@ -81,7 +81,7 @@ def generate_mmseqs_result(query_db, target_db_list):
     for target_db in target_db_list:
       target_db = str(target_db)
       final_file_name = f"{result_db}_{count}"
-      mmseq_search_cmd = ("mmseqs " + "search " + query_db + " " + target_db + " mmseq2_files/" + final_file_name + " tmp_"+final_file_name)
+      mmseq_search_cmd = ("mmseqs " + "search " + query_db + " " + target_db + " mmseq2_files/" + final_file_name + " tmp_"+final_file_name + " --threads 8")
       logger.debug(f"exec cmd: {mmseq_search_cmd}")
       os.system(mmseq_search_cmd)
       
@@ -124,7 +124,7 @@ def process_hmmout_file(file_path,score_data, threshold):
                 
                 # Extracting target ID, calculating score, and retrieving marker gene
                 read_id = "_".join(data[0].split("_")[:-1])
-                temp_score = (int(data[18]) - int(data[17]) + 1 )/int(data[5])*100
+                temp_score = (int(data[16]) - int(data[15]) + 1 )/int(data[5])*100
                 temp_marker_gene = data[3]
                 
                 # Update data if target_id exists, otherwise add new entry if score is above threshold

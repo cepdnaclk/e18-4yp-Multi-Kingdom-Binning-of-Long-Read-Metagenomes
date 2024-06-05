@@ -1,0 +1,15 @@
+step1 --> identify misbinned nodes
+python step1_oblr.py -o <path-to-output-folder>/ -d <path-to-initial-tool-results-folder>/
+
+step2 -->
+
+
+step3 --> relabel using markers
+python step3_relabelling_using_MG.py <path-to-initial-tool-results-folder>/ <path-to-output-folder>/
+
+step4 --> label propagation
+python step4_label_prop.py -o <path-to-output-folder>/ -d <path-to-initial-tool-results-folder>/ -b <name-of-initial-tool>
+
+
+
+

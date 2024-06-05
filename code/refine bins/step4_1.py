@@ -152,7 +152,7 @@ if __name__ == '__main__':
                         help="number of epochs to run",
                         type=str,
                         required=False,
-                        default=100)
+                        default=75)
 
     args = parser.parse_args()
 
@@ -161,22 +161,28 @@ if __name__ == '__main__':
     initial_binning_tool = args.tool
     
 
-    if initial_binning_tool == 'lrbinner' or initial_binning_tool=='metabcc':
+    if initial_binning_tool == 'lrbinner':
         comp = np.load(data_path + "profiles/com_profs.npy")
         covg = np.load(data_path + "profiles/cov_profs.npy")
-        read_cluster = np.load(output + 'new_classes.npy')
+
+    elif initial_binning_tool == 'metabcc':
+        comp = pd.read_csv(data_path + "profiles/3mers", delimiter=' ', header=None).to_numpy()
+        covg = pd.read_csv(data_path + "profiles/15mers", delimiter=' ', header=None).to_numpy() 
     else:
         comp = pd.read_csv(data_path + "4mers", delimiter=',', header=None).to_numpy()
         # TODO: RUN SEQ2COVVEC AND GET THE 16MERS FILE BEFORE THE BELOW STEP
         covg = pd.read_csv(data_path + "16mers", delimiter=' ', header=None).to_numpy() 
-        updated_clusters = np.load(output + 'refined_classes.npz')
-        read_cluster = updated_clusters['classes'] 
     
+    updated_clusters = np.load(output + 'refined_classes_new.npz')
+    read_cluster = updated_clusters['classes'] 
     edges = np.load(data_path +  'edges.npy')
     features_vec = np.concatenate((comp, covg), axis=1)
-       
+    print("data loaded ...")
+    
+    out_file = output + 'refined_bins_currentMethod.tsv'
 
-    print(features_vec)
+    # TODO: EXTEND FOR SEMIBIN
+       
 
     # create dataset
     data = get_graph_data(features_vec, edges)
@@ -201,7 +207,7 @@ if __name__ == '__main__':
                                       num_workers=8)
 
     # optimizer and running device
-    device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+    device = torch.device('cuda:1' if torch.cuda.is_available() else 'cpu')
     model = SAGE(data.x.shape[1], no_classes, 2, device)
     optimizer = torch.optim.Adam(
         model.parameters(), lr=0.001, weight_decay=10e-6)
@@ -225,7 +231,7 @@ if __name__ == '__main__':
 
         print(f'Epoch {epoch:02d}, Loss: {loss:.4f}')
 
-        if loss < 0.02:
+        if loss < 0.05:
             print('Early stopping, loss less than 0.05')
             break
 
@@ -234,8 +240,6 @@ if __name__ == '__main__':
     classes = torch.argmax(preds, axis=1)
     # np.savez(output + '/classes.npz', classes=classes.numpy(), classified=idx)
 
-
-    out_file = output + 'refined_bins.tsv'
 
     classes_np = classes.numpy()
 

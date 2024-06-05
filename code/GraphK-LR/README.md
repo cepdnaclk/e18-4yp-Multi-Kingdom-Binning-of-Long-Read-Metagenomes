@@ -1,3 +1,5 @@
+### How to run:
+
 step1 --> identify misbinned nodes
 ```bash
 python step1_oblr.py -o <path-to-output-folder>/ -d <path-to-initial-tool-results-folder>/

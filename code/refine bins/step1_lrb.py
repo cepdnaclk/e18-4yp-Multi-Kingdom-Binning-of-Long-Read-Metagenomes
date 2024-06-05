@@ -1,26 +1,57 @@
-# OBLR, LRBINNER, METABCC
-# for lrbinner and metabcc-lr, first the read overlap graph should be created and the edges.npy file should be already prepared
-# the inconsistent labels are removed and kept unlabelled
-
 import numpy as np
 from collections import defaultdict
 from tqdm import tqdm 
 import argparse
 
-from collections import defaultdict
+def create_edges(initial_tool_results):
+    # first, the fastq file should be converted to a fasta file (external tool)
+    # second, read_id conversion (external tool)
+    # third, chunking and creating reads.alns and degree files (kbm2 + build_graph.sh code from oblr)
 
-def get_misbinned(initial_tool_results, output_folder):
+    read_id_idx = get_idx_maps(initial_tool_results + 'read_ids')
+
+    # create and save the edge.npy file
+    edges_nparr = alignments_to_edges(initial_tool_results + 'reads.alns', read_id_idx)
+
+    np.save(initial_tool_results + 'edges.npy', edges_nparr)
+
+    return edges_nparr
+
+
+def get_idx_maps(read_ids_file_path):
+    read_id_idx = {}
+    
+    with open(read_ids_file_path) as read_ids_file:
+        for rid in tqdm( read_ids_file):
+            rid = rid.split(" ")[0].strip()  #modified: rid = rid.strip()[1:] 
+            read_id_idx[rid] = len(read_id_idx)
+    return read_id_idx
+
+
+def alignments_to_edges(alignments_file_path, read_id_idx):
+    edges = []
+    with open(alignments_file_path, "r") as af:
+        for line in tqdm(af):
+            u, v = line.strip().split('\t')
+            if u != v:
+                edges.append((read_id_idx[u], read_id_idx[v]))
+    
+    edges_nparr = np.array(edges, dtype=np.int32)
+    return edges_nparr
+
+
+def get_misbinned(initial_results_folder, output_folder):
     mis_binned = []
-    
+
     # Load the edges
-    print("Loading files...")
-    edges = np.load(initial_tool_results + 'edges.npy')
-    
-    # Load the classes
-    data = np.load(initial_tool_results + 'classes.npz')
-    clusters = data['classes']
-    print("Files loaded.")
-    
+    print("Determining edges...")
+    edges = create_edges(initial_results_folder)
+
+    print("Loading initial tool results...")
+    # Load data from bins text file
+    clusters = np.loadtxt(initial_tool_results + 'bins.txt', dtype=int) 
+    np.save(initial_results_folder + 'classes.npy' , clusters)
+
     # Create the graph
     print("Creating graph...")
     graph = defaultdict(list)
@@ -75,3 +106,5 @@ if __name__ == '__main__':
     output_folder = args.output
 
     get_misbinned(initial_tool_results, output_folder)
+
+    

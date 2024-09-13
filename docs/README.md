@@ -96,8 +96,6 @@ We have identified the following as the challenges in existing tools.
 
 - Mainly focus on composition and coverage as primary features. However, marker genes-based kingdom-level information can enhance the binning process.
 
-- Existing long reads binning tools overlook differential abundance in multiple samples. Considering species abundance across samples could enhance binning accuracy.
-
 - Lack of binning refinements for long reads binning tools. Introducing refining mechanisms could improve the precision of bin assignments.
 
 Therefore, this project aims to develop a method to bin long reads from multiple metagenomic samples while being aware of the underlying microbial kingdoms. Specifically, it will be a Python-based command-line tool addressing the scalability issues with massive datasets.
@@ -142,14 +140,14 @@ This section details the data used in experiments and tools employed in the over
 
 #### Data
 ##### Testing Binning Tool Functionality
-The simLoRD read simulator was used to generate datasets containing diverse kingdom-level microorganisms for initial testing of binning tool functionality. Mock community reference sequences were employed in this process.
+We conducted a comprehensive evaluation of the tool's performance using following publicly accessible mock long-read datasets. These datasets are as follows:
 
-##### Current Experimental Setup
-The current experimental setup utilizes datasets from two chemistries: R9.4 (older long reads) and R10.4 (latest, most accurate long reads). R10.4 data is primarily used due to its superior read accuracy.
+- SRR932898 – obtained from Homo sapiens samples, offering insight into human genomic data
+- ERR9765782 – sourced from three synthetic microbial communities, providing a controlled environment for testing microbial diversity
+- SRR13128014 – designed to replicate the complexity of the human gut microbiome, simulating a diverse and complex microbial environment
+- ERR9765783 – also derived from three synthetic microbial communities
 
-Examples:
-- SRR9328980 (includes Bacteria and Eukaryota)
-- ERR97765782 (includes Bacteria, Archaea, Eukaryota, and Viruses)
+This selection of datasets allowed us to thoroughly assess the versatility and accuracy of our tool across different biological contexts.
 
 ##### Marker Genes
 Marker genes are specific DNA or protein sequences that indicate the presence of a particular organism or functional group. The information for these marker genes is stored in hidden Markov model files (.hmm files).  Currently, a combined database containing 38,991 marker genes related to bacteria, fungi, protists, and viruses is used for analysis.
@@ -159,6 +157,9 @@ Marker genes are specific DNA or protein sequences that indicate the presence of
 - Prodigal - To predict protein-coding sequences from reads.
 - HMMER - To scan marker genes within protein-coded sequences
 - Minimap - To get the mapping between reads and the actual species bin they belong
+- MetaFlye - For de novo assembly of long-read sequences, especially in metagenomic datasets.
+- CheckM - To assess the completeness and contamination levels of genome bins, ensuring high-quality metagenomic binning.
+- GTDB-TK - For taxonomic classification of genome bins based on the Genome Taxonomy Database (GTDB), providing accurate species-level identification.
 
 #### Implementation: GraphK-LR Refiner
 A metagenomic binning refinement tool for long reads, which can be used in conjunction with long-read binning tools such as OBLR, MetaBCC-LR, and others. This refinement tool considers information at the microorganism kingdom level during the refinement process and utilizes a read-overlap graph approach. The tool is being finalized as a Python-based command-line tool.
@@ -167,14 +168,18 @@ A metagenomic binning refinement tool for long reads, which can be used in conju
 
 | Dataset    | Tool         | Precision(%) | Recall(%)   | F1-score(%)   | ARI(%)      |
 |------------|--------------|--------------|-------------|---------------|-------------|
-|SRR9328980  | OBLR         | 97.96        | 97.46       | 97.71         | 97.63       |
-|            | GraphK-LR    | 98.44        | 97.91       | 98.17         | 98.19       |
+|SRR932898   | OBLR         | 97.96        | 97.46       | 97.71         | 97.63       |
+|            | GraphK-LR    | 98.6         | 98.08       | 98.34         | 98.44       |
 |            |              |              |             |               |             |
-|ERR97765782 | OBLR         | 63.81        | 77.77       | 70.10         | 52.01       |
-|            | GraphK-LR    | 64.65        | 79.08       | 71.14         | 53.11       |
+|ERR97765782 | OBLR         | 65.44        | 77.64       | 71.02         | 52.80       |
+|            | GraphK-LR    | 66.17        | 79.27       | 72.14         | 54.22       |
 |            |              |              |             |               |             |
-|            | LRBinner     | 50.35        | 87.73       | 63.98         | 44.48       |
-|            | GraphK-LR    | 50.58        | 88.10       | 64.26         | 45.02       |
+|SRR13128014 | LRBinner     | 79.27        | 87.89       | 83.36         | 64.72       |
+|            | GraphK-LR    | 79.88        | 88.57       | 84.01         | 65.42       |
+|            |              |              |             |               |             |
+|ERR9765783  | OBLR         | 79.04        | 96.91       | 87.06         | 76.95       |
+|            | GraphK-LR    | 79.52        | 97.77       | 87.71         | 77.87       |
+
 
 ## Conclusion
 

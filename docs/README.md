@@ -140,7 +140,9 @@ This section details the data used in experiments and tools employed in the over
 
 #### Data
 ##### Testing Binning Tool Functionality
+<p style="text-align: justify">
 We conducted a comprehensive evaluation of the tool's performance using following publicly accessible mock long-read datasets. These datasets are as follows:
+</p>
 
 - SRR932898 – obtained from Homo sapiens samples, offering insight into human genomic data
 - ERR9765782 – sourced from three synthetic microbial communities, providing a controlled environment for testing microbial diversity
@@ -150,7 +152,9 @@ We conducted a comprehensive evaluation of the tool's performance using followin
 This selection of datasets allowed us to thoroughly assess the versatility and accuracy of our tool across different biological contexts.
 
 ##### Marker Genes
+<p style="text-align: justify">
 Marker genes are specific DNA or protein sequences that indicate the presence of a particular organism or functional group. The information for these marker genes is stored in hidden Markov model files (.hmm files).  Currently, a combined database containing 38,991 marker genes related to bacteria, fungi, protists, and viruses is used for analysis.
+</p>
 
 #### Tools
 - Sec2covvec - To get the Kmer coverage profiles
@@ -162,7 +166,9 @@ Marker genes are specific DNA or protein sequences that indicate the presence of
 - GTDB-TK - For taxonomic classification of genome bins based on the Genome Taxonomy Database (GTDB), providing accurate species-level identification.
 
 #### Implementation: GraphK-LR Refiner
+<p style="text-align: justify">
 A metagenomic binning refinement tool for long reads, which can be used in conjunction with long-read binning tools such as OBLR, MetaBCC-LR, and others. This refinement tool considers information at the microorganism kingdom level during the refinement process and utilizes a read-overlap graph approach. The tool is being finalized as a Python-based command-line tool.
+</p>
 
 ## Results and Analysis
 
@@ -182,8 +188,9 @@ A metagenomic binning refinement tool for long reads, which can be used in conju
 
 
 ## Conclusion
-
-In conclusion, our refinement tool, GraphK-LR, has marginally enhanced initial binning results, by approximately 1% in evaluation criteria. However, this improvement falls short of significance. We are committed to advancing our refinement techniques further. Notably, existing tools such as OBLR, LRBinner, and MetaBCC already employ methodologies ranging from read overlap graphs to composition and coverage features in their binning processes. As such, we assume that our refiner may not substantially impact their outcomes. To explore alternative avenues for enhancement, we aim to experiment with SemiBin2, another long-read binning tool employing a completely different approach. Through rigorous testing and comparison, we hope to improve our tool's performance and contribute to the ongoing evolution of binning methodologies.
+<p style="text-align: justify">
+This study introduces a new method for refining long-read metagenomic binning by using read-overlap graphs to correct misclassified reads from an initial binning tool. By incorporating kingdom-level annotations with species-specific markers and orthologous gene groups, we significantly improved binning, especially for unclassified reads. While traditional label propagation with GNNs is limited by the initial bin count, even small accuracy gains can greatly impact downstream analyses. Our approach adds kingdom-specific information directly from raw reads, offering a valuable enhancement to long-read binning methods.
+</p>
 
 ## Publications
 [//]: # "Note: Uncomment each once you uploaded the files to the repository"
@@ -201,6 +208,12 @@ In conclusion, our refinement tool, GraphK-LR, has marginally enhanced initial b
 [2] Wickramarachchi, A., & Lin, Y. (2022). Binning long reads in metagenomics datasets using composition and coverage information. Algorithms for molecular biology : AMB, 17(1), 14. https://doi.org/10.1186/s13015-022-00221-z 
 
 [3] Wickramarachchi, A., & Lin, Y. (2022, May). Metagenomics binning of long reads using read-overlap graphs. In RECOMB International Workshop on Comparative Genomics (pp. 260-278). Cham: Springer International Publishing.
+
+[4] D. Herath, S. L. Tang, K. Tandon, D.Ackland, and S. K. Halgamuge, “CoMet: A workflow using contig coverage and composition for binning a metagenomic sample with high precision,” BMC Bioinformatics, vol. 18, 2017, doi:10.1186/s12859-017-1967-3.
+
+[5] V. Mallawaarachchi and Y. Lin, “MetaCoAG: Binning Metagenomic Contigs via Composition, Coverage and Assembly Graphs,” in Lecture Notes in Computer Science (including subseries Lecture Notes in Artificial Intelligence and Lecture Notes in Bioinformatics), 2022. doi: 10.1007/978-3-031-04749-7_5.
+
+[6] V. Mallawaarachchi, A. Wickramarachchi, and Y. Lin, “GraphBin: refined binning of metagenomic contigs using assembly graphs,” Bioinformatics, vol. 36, no. 11, pp. 3307–3313, Jun. 2020, doi:10.1093/BIOINFORMATICS/BTAA180.
 
 
 ## Links
